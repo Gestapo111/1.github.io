@@ -48,6 +48,10 @@
         button:hover {
             background-color: #218838;
         }
+        #results {
+            margin-top: 20px;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -338,17 +342,28 @@
             const resultsContainer = document.getElementById('results');
             const answers = document.querySelectorAll('input[type="radio"]:checked');
             let score = 0;
-            let feedback = '';
 
             quizData.forEach((data, index) => {
-                const correct = data.answers.find(answer => answer.correct).text;
-                const selected = answers[index] ? answers[index].nextElementSibling.textContent : 'No contestada';
-                const result = answers[index] && answers[index].value === 'true' ? 'Correcta' : 'Incorrecta';
-                if (result === 'Correcta') score += 0.4;
-                feedback += `<p>${index + 1}. ${result} (Respuesta seleccionada: ${selected}, Respuesta correcta: ${correct})</p>`;
+                const selected = answers[index] ? answers[index].value === 'true' : null;
+                if (selected === true) {
+                    score += 0.4; // Each correct answer is worth 0.4 points
+                }
             });
 
             score = Math.round(score * 10) / 10; // Round to one decimal place
+            let feedback = quizData.map((data, index) => {
+                const selected = answers[index] ? answers[index].value === 'true' : null;
+                let result;
+                if (selected === null) {
+                    result = "No contestada";
+                } else if (selected === true) {
+                    result = "Correcta";
+                } else {
+                    result = "Incorrecta";
+                }
+                return `<p>${index + 1}. ${result}</p>`;
+            }).join("");
+
             resultsContainer.innerHTML = `<h3>Resultados:</h3><p>Puntaje: ${score} / 10</p>${feedback}`;
 
             attempt++;
@@ -360,4 +375,3 @@
     </script>
 </body>
 </html>
-
