@@ -367,6 +367,9 @@
             resultsContainer.innerHTML = `<h3>Resultados:</h3><p>Puntaje: ${score} / 10</p>${feedback}`;
 
             attempt++;
+            if (attempt >= maxAttempts) {
+                alert('Has alcanzado el número máximo de intentos.');
+            }
         }
 
         document.getElementById('submit').addEventListener('click', submitQuiz);
