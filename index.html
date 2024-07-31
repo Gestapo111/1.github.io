@@ -1,1 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación: EL TRABAJO CIENTÍFICO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .quiz-container {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
+        }
+        .question {
+            margin-bottom: 15px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Evaluación: EL TRABAJO CIENTÍFICO</h1>
+    <div class="quiz-container">
+        <div id="quiz"></div>
+        <button id="submit">Enviar respuestas</button>
+        <div id="results"></div>
+    </div>
+    <script>
+        const quizData = [
+            {
+                question: "¿Qué es el método científico?",
+                answers: [
+                    { text: "Un proceso sistemático para resolver problemas.", correct: true },
+                    { text: "Una teoría sobre la evolución.", correct: false },
+                    { text: "Una fórmula matemática.", correct: false },
+                    { text: "Un experimento de laboratorio.", correct: false }
+                ]
+            },
+            {
+                question: "¿Cuál es la primera etapa del método científico?",
+                answers: [
+                    { text: "Formulación de hipótesis.", correct: false },
+                    { text: "Observación.", correct: true },
+                    { text: "Experimentación.", correct: false },
+                    { text: "Conclusión.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué significa falsabilidad en el contexto científico?",
+                answers: [
+                    { text: "Que una hipótesis puede ser probada como falsa.", correct: true },
+                    { text: "Que una hipótesis es verdadera.", correct: false },
+                    { text: "Que una hipótesis no tiene pruebas.", correct: false },
+                    { text: "Que una hipótesis es una suposición.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es una hipótesis en el método científico?",
+                answers: [
+                    { text: "Una suposición que puede ser probada.", correct: true },
+                    { text: "Una conclusión final.", correct: false },
+                    { text: "Un experimento fallido.", correct: false },
+                    { text: "Una observación directa.", correct: false }
+                ]
+            },
+            {
+                question: "¿Cuál es la importancia de la reproducibilidad en los experimentos científicos?",
+                answers: [
+                    { text: "Garantiza que los resultados sean fiables.", correct: true },
+                    { text: "Permite descubrir nuevos fenómenos.", correct: false },
+                    { text: "Ayuda a formular nuevas teorías.", correct: false },
+                    { text: "Facilita la publicación de artículos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es una variable independiente en un experimento?",
+                answers: [
+                    { text: "La variable que se manipula.", correct: true },
+                    { text: "La variable que se mide.", correct: false },
+                    { text: "La variable que se mantiene constante.", correct: false },
+                    { text: "La variable que se observa.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es una teoría científica?",
+                answers: [
+                    { text: "Una explicación bien fundamentada de un aspecto del mundo natural.", correct: true },
+                    { text: "Una suposición sin evidencia.", correct: false },
+                    { text: "Un hecho observado.", correct: false },
+                    { text: "Un experimento aislado.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué papel juega la revisión por pares en la ciencia?",
+                answers: [
+                    { text: "Verificar la validez y calidad de la investigación.", correct: true },
+                    { text: "Garantizar que todos los estudios sean aceptados.", correct: false },
+                    { text: "Eliminar cualquier error de los estudios.", correct: false },
+                    { text: "Publicar solo estudios innovadores.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un control en un experimento?",
+                answers: [
+                    { text: "Una parte del experimento que no se manipula.", correct: true },
+                    { text: "Un grupo de sujetos experimentales.", correct: false },
+                    { text: "La variable que se cambia.", correct: false },
+                    { text: "El equipo utilizado en el experimento.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué se entiende por datos cualitativos?",
+                answers: [
+                    { text: "Datos que describen cualidades o características.", correct: true },
+                    { text: "Datos numéricos.", correct: false },
+                    { text: "Datos obtenidos de mediciones.", correct: false },
+                    { text: "Datos derivados de cálculos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es la inferencia en el método científico?",
+                answers: [
+                    { text: "Una conclusión basada en observaciones.", correct: true },
+                    { text: "Una observación directa.", correct: false },
+                    { text: "Una hipótesis sin pruebas.", correct: false },
+                    { text: "Un error experimental.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un experimento de control?",
+                answers: [
+                    { text: "Un experimento en el que no se manipula la variable independiente.", correct: true },
+                    { text: "Un experimento en el que todas las variables están controladas.", correct: false },
+                    { text: "Un experimento realizado en condiciones óptimas.", correct: false },
+                    { text: "Un experimento con resultados conocidos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es una muestra en un experimento?",
+                answers: [
+                    { text: "Una porción representativa de un todo.", correct: true },
+                    { text: "El total de sujetos experimentales.", correct: false },
+                    { text: "Los resultados obtenidos.", correct: false },
+                    { text: "Los equipos utilizados.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es el análisis de datos en el contexto científico?",
+                answers: [
+                    { text: "La interpretación y evaluación de los datos recolectados.", correct: true },
+                    { text: "La recolección de datos.", correct: false },
+                    { text: "La formulación de hipótesis.", correct: false },
+                    { text: "La realización de experimentos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es una hipótesis nula?",
+                answers: [
+                    { text: "Una hipótesis que no muestra efecto.", correct: true },
+                    { text: "Una hipótesis confirmada.", correct: false },
+                    { text: "Una hipótesis incorrecta.", correct: false },
+                    { text: "Una hipótesis secundaria.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un error experimental?",
+                answers: [
+                    { text: "Una variabilidad que afecta los resultados del experimento.", correct: true },
+                    { text: "Una observación incorrecta.", correct: false },
+                    { text: "Un fallo en el equipo.", correct: false },
+                    { text: "Una hipótesis incorrecta.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué significa replicar un experimento?",
+                answers: [
+                    { text: "Realizar el experimento nuevamente para verificar los resultados.", correct: true },
+                    { text: "Cambiar las condiciones del experimento.", correct: false },
+                    { text: "Utilizar diferentes sujetos experimentales.", correct: false },
+                    { text: "Modificar la hipótesis original.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es la observación en el método científico?",
+                answers: [
+                    { text: "El proceso de recopilar datos mediante los sentidos.", correct: true },
+                    { text: "La formulación de una hipótesis.", correct: false },
+                    { text: "La interpretación de los datos.", correct: false },
+                    { text: "La realización de experimentos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un modelo en ciencia?",
+                answers: [
+                    { text: "Una representación simplificada de un fenómeno.", correct: true },
+                    { text: "Un experimento.", correct: false },
+                    { text: "Un resultado de datos.", correct: false },
+                    { text: "Una teoría comprobada.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué se entiende por sesgo en la investigación científica?",
+                answers: [
+                    { text: "Una inclinación que afecta la objetividad de los resultados.", correct: true },
+                    { text: "Un resultado positivo.", correct: false },
+                    { text: "Un resultado negativo.", correct: false },
+                    { text: "Un error en los cálculos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es la revisión por pares?",
+                answers: [
+                    { text: "El proceso de evaluar la calidad y validez de la investigación por otros expertos.", correct: true },
+                    { text: "El proceso de recopilar datos.", correct: false },
+                    { text: "La publicación de resultados.", correct: false },
+                    { text: "La interpretación de los datos.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un experimento longitudinal?",
+                answers: [
+                    { text: "Un estudio realizado a lo largo de un período de tiempo extenso.", correct: true },
+                    { text: "Un estudio de corta duración.", correct: false },
+                    { text: "Un experimento realizado en diferentes lugares.", correct: false },
+                    { text: "Un experimento con múltiples variables.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un estudio de caso?",
+                answers: [
+                    { text: "Una investigación profunda sobre un único individuo o grupo.", correct: true },
+                    { text: "Un experimento controlado.", correct: false },
+                    { text: "Una encuesta amplia.", correct: false },
+                    { text: "Una revisión de literatura.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un experimento aleatorizado?",
+                answers: [
+                    { text: "Un experimento en el que los sujetos se asignan al azar a los grupos experimentales.", correct: true },
+                    { text: "Un experimento con variables controladas.", correct: false },
+                    { text: "Un experimento sin hipótesis.", correct: false },
+                    { text: "Un experimento realizado en condiciones naturales.", correct: false }
+                ]
+            },
+            {
+                question: "¿Qué es un experimento doble ciego?",
+                answers: [
+                    { text: "Un experimento en el que ni los sujetos ni los investigadores saben qué tratamiento recibe cada grupo.", correct: true },
+                    { text: "Un experimento en el que los sujetos saben qué tratamiento reciben.", correct: false },
+                    { text: "Un experimento en el que los investigadores saben qué tratamiento recibe cada grupo.", correct: false },
+                    { text: "Un experimento sin hipótesis.", correct: false }
+                ]
+            }
+        ];
+
+        let attempt = 0;
+        const maxAttempts = 3;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = '';
+            quizData.forEach((data, index) => {
+                const questionContainer = document.createElement('div');
+                questionContainer.className = 'question';
+
+                const questionTitle = document.createElement('h3');
+                questionTitle.innerText = `${index + 1}. ${data.question}`;
+                questionContainer.appendChild(questionTitle);
+
+                const optionsList = document.createElement('ul');
+                optionsList.className = 'options';
+
+                shuffle(data.answers).forEach(answer => {
+                    const option = document.createElement('li');
+                    const optionLabel = document.createElement('label');
+                    const optionInput = document.createElement('input');
+                    optionInput.type = 'radio';
+                    optionInput.name = `question${index}`;
+                    optionInput.value = answer.correct;
+                    optionLabel.appendChild(optionInput);
+                    optionLabel.appendChild(document.createTextNode(answer.text));
+                    option.appendChild(optionLabel);
+                    optionsList.appendChild(option);
+                });
+
+                questionContainer.appendChild(optionsList);
+                quizContainer.appendChild(questionContainer);
+            });
+        }
+
+        function submitQuiz() {
+            if (attempt >= maxAttempts) {
+                alert('Has alcanzado el número máximo de intentos.');
+                return;
+            }
+
+            const resultsContainer = document.getElementById('results');
+            const answers = document.querySelectorAll('input[type="radio"]:checked');
+            let score = 0;
+            let feedback = '';
+
+            quizData.forEach((data, index) => {
+                const correct = data.answers.find(answer => answer.correct).text;
+                const selected = answers[index] ? answers[index].nextElementSibling.textContent : 'No contestada';
+                const result = answers[index] && answers[index].value === 'true' ? 'Correcta' : 'Incorrecta';
+                if (result === 'Correcta') score += 0.4;
+                feedback += `<p>${index + 1}. ${result} (Respuesta seleccionada: ${selected}, Respuesta correcta: ${correct})</p>`;
+            });
+
+            score = Math.round(score * 10) / 10; // Round to one decimal place
+            resultsContainer.innerHTML = `<h3>Resultados:</h3><p>Puntaje: ${score} / 10</p>${feedback}`;
+
+            attempt++;
+        }
+
+        document.getElementById('submit').addEventListener('click', submitQuiz);
+
+        loadQuiz();
+    </script>
+</body>
+</html>
 
