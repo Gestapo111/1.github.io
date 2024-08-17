@@ -24,7 +24,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
-            max-width: 900px;
+            max-width: 800px;
         }
         .question {
             margin-bottom: 15px;
@@ -61,7 +61,7 @@
             position: fixed;
             bottom: 0;
         }
-        /* Modal styles */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -71,6 +71,7 @@
             width: 100%;
             height: 100%;
             overflow: auto;
+            background-color: rgb(0,0,0);
             background-color: rgba(0,0,0,0.4);
             padding-top: 60px;
         }
@@ -82,7 +83,6 @@
             width: 80%;
             max-width: 600px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
         .close {
             color: #aaa;
@@ -102,25 +102,23 @@
     <h1>Evaluación: El Estudio de las Ciencias Naturales</h1>
     <div class="quiz-container">
         <div id="quiz"></div>
-        <input type="text" id="fullname" placeholder="Nombre completo" required>
-        <input type="text" id="nie" placeholder="NIE" required>
         <button id="submit">Enviar respuestas</button>
     </div>
-    <footer>
-        &copy; Derechos Reservados Prof. Alberto Sanchez
-    </footer>
 
     <!-- Modal -->
     <div id="resultModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Resultados de la Evaluación</h2>
             <p id="modalName"></p>
             <p id="modalNIE"></p>
             <p id="modalScore"></p>
             <div id="modalAnswers"></div>
         </div>
     </div>
+
+    <footer>
+        &copy; Derechos Reservados Prof. Alberto Sanchez
+    </footer>
 
     <script>
         const quizData = [
@@ -138,127 +136,115 @@
             { question: "¿Qué es una hipótesis nula?", answers: [{ text: "Una hipótesis que propone que no hay efecto o relación entre variables.", correct: true }, { text: "Una hipótesis que siempre es cierta.", correct: false }, { text: "Una hipótesis que no se puede probar.", correct: false }] },
             { question: "¿Qué es un experimento de doble ciego?", answers: [{ text: "Un experimento en el que ni los participantes ni los investigadores saben quién recibe el tratamiento.", correct: true }, { text: "Un experimento en el que solo los investigadores saben quién recibe el tratamiento.", correct: false }, { text: "Un experimento sin grupo control.", correct: false }] },
             { question: "¿Qué es la replicación en la investigación científica?", answers: [{ text: "La repetición de un experimento para verificar los resultados.", correct: true }, { text: "La creación de múltiples hipótesis.", correct: false }, { text: "La publicación de los resultados.", correct: false }] },
-            { question: "¿Qué es un grupo control en un experimento?", answers: [{ text: "Un grupo que no recibe el tratamiento y se usa como referencia.", correct: true }, { text: "Un grupo que recibe el tratamiento que se está probando.", correct: false }, { text: "Un grupo que se excluye del experimento.", correct: false }] },
-            { question: "¿Qué es un grupo experimental en un experimento?", answers: [{ text: "Un grupo que recibe el tratamiento que se está probando.", correct: true }, { text: "Un grupo que no recibe tratamiento.", correct: false }, { text: "Un grupo que tiene un tratamiento estándar.", correct: false }] },
-            { question: "¿Qué es un sesgo en la investigación científica?", answers: [{ text: "Una inclinación o preferencia que puede afectar los resultados.", correct: true }, { text: "Un error en la medición.", correct: false }, { text: "Un tipo de variable.", correct: false }] },
-            { question: "¿Qué es la validez en la investigación científica?", answers: [{ text: "La precisión con la que un experimento mide lo que se propone medir.", correct: true }, { text: "La capacidad de un experimento para ser replicado.", correct: false }, { text: "La capacidad de un experimento para ser publicado.", correct: false }] },
-            { question: "¿Qué es la confiabilidad en la investigación científica?", answers: [{ text: "La capacidad de un experimento para producir resultados consistentes en repeticiones.", correct: true }, { text: "La exactitud de los resultados.", correct: false }, { text: "La validez de la hipótesis.", correct: false }] },
-            { question: "¿Qué es la significancia estadística?", answers: [{ text: "La probabilidad de que los resultados no sean debidos al azar.", correct: true }, { text: "La importancia práctica de los resultados.", correct: false }, { text: "La validez de los datos recolectados.", correct: false }] },
-            { question: "¿Qué es una variable controlada?", answers: [{ text: "Una variable que se mantiene constante para no influir en los resultados del experimento.", correct: true }, { text: "Una variable que se mide en el experimento.", correct: false }, { text: "Una variable que se manipula en el experimento.", correct: false }] },
-            { question: "¿Qué es una variable cualitativa?", answers: [{ text: "Una variable que se describe con palabras en lugar de números.", correct: true }, { text: "Una variable que se mide con instrumentos.", correct: false }, { text: "Una variable que siempre es constante.", correct: false }] },
-            { question: "¿Qué es una variable cuantitativa?", answers: [{ text: "Una variable que se mide con números y tiene un valor numérico.", correct: true }, { text: "Una variable que se describe con palabras.", correct: false }, { text: "Una variable que no se puede medir.", correct: false }] },
-            { question: "¿Qué es una relación causal?", answers: [{ text: "Una relación en la que una variable causa un cambio en otra variable.", correct: true }, { text: "Una relación en la que dos variables cambian juntas sin que una cause la otra.", correct: false }, { text: "Una relación que se observa sin intervención.", correct: false }] },
-            { question: "¿Qué es la interpretación de datos?", answers: [{ text: "El proceso de analizar los datos y sacar conclusiones sobre los resultados.", correct: true }, { text: "El proceso de recolectar datos.", correct: false }, { text: "El proceso de formular una hipótesis.", correct: false }] },
-            { question: "¿Qué es una conclusión en la investigación científica?", answers: [{ text: "Una declaración basada en los resultados y el análisis de un experimento.", correct: true }, { text: "Una suposición inicial antes de realizar el experimento.", correct: false }, { text: "Una observación preliminar.", correct: false }] },
-            { question: "¿Qué es la generalización en la investigación científica?", answers: [{ text: "Aplicar los resultados de un estudio a una población más amplia.", correct: true }, { text: "Aplicar los resultados de un estudio solo al grupo de estudio específico.", correct: false }, { text: "Aplicar los resultados a un solo individuo.", correct: false }] },
-            { question: "¿Qué es la replicabilidad?", answers: [{ text: "La capacidad de repetir un estudio y obtener los mismos resultados.", correct: true }, { text: "La capacidad de realizar un estudio en diferentes condiciones.", correct: false }, { text: "La capacidad de obtener resultados inmediatos.", correct: false }] },
-            { question: "¿Qué es el sesgo de confirmación?", answers: [{ text: "La tendencia a interpretar la información de manera que confirme las creencias preexistentes.", correct: true }, { text: "La tendencia a rechazar información que contradice las creencias.", correct: false }, { text: "La tendencia a aceptar toda la información sin cuestionarla.", correct: false }] },
-            { question: "¿Qué es una correlación positiva?", answers: [{ text: "Una relación en la que dos variables aumentan o disminuyen juntas.", correct: true }, { text: "Una relación en la que una variable aumenta mientras la otra disminuye.", correct: false }, { text: "Una relación en la que dos variables permanecen constantes.", correct: false }] },
-            { question: "¿Qué es una correlación negativa?", answers: [{ text: "Una relación en la que una variable aumenta mientras la otra disminuye.", correct: true }, { text: "Una relación en la que dos variables aumentan juntas.", correct: false }, { text: "Una relación en la que dos variables permanecen constantes.", correct: false }] },
-            { question: "¿Qué es el efecto placebo?", answers: [{ text: "Un efecto observado en un grupo control debido a la creencia de recibir tratamiento.", correct: true }, { text: "Un error en la medición de resultados.", correct: false }, { text: "Un efecto que se observa solo en un grupo experimental.", correct: false }] },
-            { question: "¿Qué es una variable confusa?", answers: [{ text: "Una variable que puede influir en los resultados del experimento y que no ha sido controlada.", correct: true }, { text: "Una variable que se controla directamente en el experimento.", correct: false }, { text: "Una variable que no tiene relación con el experimento.", correct: false }] }
+            { question: "¿Qué es un sesgo en la investigación científica?", answers: [{ text: "Una inclinación o preferencia que puede afectar los resultados.", correct: true }, { text: "Un tipo de error de medición.", correct: false }, { text: "Un resultado inesperado.", correct: false }] },
+            { question: "¿Qué es la revisión por pares?", answers: [{ text: "La evaluación de la investigación por otros expertos en el campo.", correct: true }, { text: "La publicación de resultados en un diario.", correct: false }, { text: "La repetición de un experimento por el mismo investigador.", correct: false }] },
+            { question: "¿Qué es un control positivo en un experimento?", answers: [{ text: "Un grupo en el que se espera un resultado positivo para comparar.", correct: true }, { text: "Un grupo sin tratamiento.", correct: false }, { text: "Un grupo en el que se espera un resultado negativo.", correct: false }] },
+            { question: "¿Qué es un control negativo en un experimento?", answers: [{ text: "Un grupo en el que no se espera ningún efecto para comparar.", correct: true }, { text: "Un grupo sin tratamiento.", correct: false }, { text: "Un grupo en el que se espera un resultado positivo.", correct: false }] },
+            { question: "¿Qué es la inferencia?", answers: [{ text: "Una conclusión basada en evidencia y razonamiento.", correct: true }, { text: "Una observación directa.", correct: false }, { text: "Una hipótesis sin pruebas.", correct: false }] },
+            { question: "¿Qué es un ensayo clínico?", answers: [{ text: "Una investigación experimental en humanos para evaluar tratamientos médicos.", correct: true }, { text: "Un estudio de observación en humanos.", correct: false }, { text: "Un experimento en animales.", correct: false }] },
+            { question: "¿Qué es una muestra representativa?", answers: [{ text: "Un subconjunto de una población que refleja las características de la población completa.", correct: true }, { text: "Un subconjunto de una población seleccionado al azar.", correct: false }, { text: "Un grupo control en un experimento.", correct: false }] },
+            { question: "¿Qué es una correlación?", answers: [{ text: "Una relación entre dos variables donde si una cambia, la otra también lo hace.", correct: true }, { text: "Una causa y efecto.", correct: false }, { text: "Una medición de exactitud.", correct: false }] },
+            { question: "¿Qué es un ensayo doble ciego?", answers: [{ text: "Un experimento en el que ni el sujeto ni el investigador saben quién recibe el tratamiento.", correct: true }, { text: "Un experimento en el que solo el investigador sabe quién recibe el tratamiento.", correct: false }, { text: "Un experimento sin grupo control.", correct: false }] },
+            { question: "¿Qué es una prueba t?", answers: [{ text: "Una prueba estadística para comparar las medias de dos grupos.", correct: true }, { text: "Una técnica de observación.", correct: false }, { text: "Un método para recolectar datos.", correct: false }] },
+            { question: "¿Qué es la falsabilidad?", answers: [{ text: "La capacidad de una hipótesis para ser probada como falsa.", correct: true }, { text: "La capacidad de una teoría para ser siempre verdadera.", correct: false }, { text: "La capacidad de un experimento para ser replicado.", correct: false }] },
+            { question: "¿Qué es el principio de parsimonia?", answers: [{ text: "El principio de que la explicación más simple es generalmente la correcta.", correct: true }, { text: "El principio de que todas las explicaciones son igualmente válidas.", correct: false }, { text: "El principio de que la explicación más compleja es la correcta.", correct: false }] },
+            { question: "¿Qué es la causalidad en la investigación científica?", answers: [{ text: "La relación en la que una variable causa un cambio en otra variable.", correct: true }, { text: "La relación en la que dos variables cambian de forma independiente.", correct: false }, { text: "La observación de una coincidencia entre dos variables.", correct: false }] },
+            { question: "¿Qué es un diseño experimental?", answers: [{ text: "Un plan detallado para realizar experimentos y recolectar datos.", correct: true }, { text: "Una descripción de los resultados de un experimento.", correct: false }, { text: "Un conjunto de hipótesis relacionadas.", correct: false }] },
+            { question: "¿Qué es una variable confusa?", answers: [{ text: "Una variable que puede afectar el resultado del experimento y no se controla.", correct: true }, { text: "Una variable que se mide en el experimento.", correct: false }, { text: "Una variable que se mantiene constante en el experimento.", correct: false }] },
+            { question: "¿Qué es el efecto placebo?", answers: [{ text: "Una mejora en la condición de un paciente debido a la expectativa de tratamiento, no al tratamiento mismo.", correct: true }, { text: "Una respuesta física al tratamiento real.", correct: false }, { text: "Una reacción adversa a un medicamento.", correct: false }] },
+            { question: "¿Qué es la desviación estándar?", answers: [{ text: "Una medida de la dispersión de los datos alrededor de la media.", correct: true }, { text: "Una medida de la media de los datos.", correct: false }, { text: "Una medida de la correlación entre variables.", correct: false }] },
+            { question: "¿Qué es la validez interna en un experimento?", answers: [{ text: "El grado en que el experimento mide lo que pretende medir sin influencia de variables externas.", correct: true }, { text: "El grado en que los resultados son aplicables a la población general.", correct: false }, { text: "El grado en que los resultados son repetibles en diferentes experimentos.", correct: false }] },
+            { question: "¿Qué es una hipótesis alternativa?", answers: [{ text: "Una hipótesis que plantea un efecto o relación entre variables como opuesto a la hipótesis nula.", correct: true }, { text: "Una hipótesis que no puede ser probada.", correct: false }, { text: "Una hipótesis que siempre es cierta.", correct: false }] },
+            { question: "¿Qué es un diseño de estudio transversal?", answers: [{ text: "Un estudio que observa a una población en un solo punto en el tiempo.", correct: true }, { text: "Un estudio que sigue a una población a lo largo del tiempo.", correct: false }, { text: "Un estudio que compara dos grupos de diferentes edades.", correct: false }] },
+            { question: "¿Qué es un sesgo de selección?", answers: [{ text: "Un sesgo que ocurre cuando los participantes del estudio no son representativos de la población general.", correct: true }, { text: "Un sesgo que ocurre cuando se elige una muestra al azar.", correct: false }, { text: "Un sesgo que ocurre cuando se realizan múltiples pruebas estadísticas.", correct: false }] },
+            { question: "¿Qué es la teoría de la evolución por selección natural?", answers: [{ text: "La teoría que propone que los organismos evolucionan a través de la selección de características favorables.", correct: true }, { text: "La teoría que propone que los organismos evolucionan por cambios aleatorios.", correct: false }, { text: "La teoría que propone que los organismos no evolucionan.", correct: false }] },
+            { question: "¿Qué es el equilibrio dinámico en un ecosistema?", answers: [{ text: "El estado en el que las poblaciones de especies en un ecosistema tienden a estabilizarse en un rango de variabilidad.", correct: true }, { text: "El estado en el que las especies en un ecosistema están en constante cambio.", correct: false }, { text: "El estado en el que un ecosistema permanece sin cambios.", correct: false }] },
+            { question: "¿Qué es la retroalimentación positiva en un sistema biológico?", answers: [{ text: "Un proceso que amplifica los cambios en el sistema y puede llevar a un estado de desequilibrio.", correct: true }, { text: "Un proceso que mantiene el equilibrio en el sistema.", correct: false }, { text: "Un proceso que disminuye los cambios en el sistema.", correct: false }] },
+            { question: "¿Qué es la biodiversidad y por qué es importante?", answers: [{ text: "La variedad de vida en un ecosistema; es importante porque aumenta la resiliencia y estabilidad del ecosistema.", correct: true }, { text: "La cantidad de especies en un ecosistema; es importante para la producción de alimentos.", correct: false }, { text: "La variabilidad genética en una especie; es importante para la salud de los individuos.", correct: false }] },
+            { question: "¿Qué es la transferencia de energía en una cadena trófica?", answers: [{ text: "El proceso mediante el cual la energía se transfiere de un organismo a otro a través de niveles tróficos.", correct: true }, { text: "El proceso mediante el cual la energía se conserva en un organismo.", correct: false }, { text: "El proceso mediante el cual la energía se pierde en el ambiente.", correct: false }] },
+            { question: "¿Qué es la homeostasis en organismos vivos?", answers: [{ text: "La capacidad de un organismo para mantener un ambiente interno estable a pesar de los cambios externos.", correct: true }, { text: "La capacidad de un organismo para crecer y reproducirse.", correct: false }, { text: "La capacidad de un organismo para responder a estímulos.", correct: false }] },
+            { question: "¿Qué es la teoría de los juegos en biología evolutiva?", answers: [{ text: "Un modelo que analiza estrategias competitivas y cooperativas entre organismos.", correct: true }, { text: "Un modelo que estudia el comportamiento individual de organismos.", correct: false }, { text: "Un modelo que estudia la evolución de una sola especie.", correct: false }] },
+            { question: "¿Qué es el ADN y su función en la biología?", answers: [{ text: "El ADN es el material genético que contiene la información para el desarrollo y funcionamiento de los organismos.", correct: true }, { text: "El ADN es una molécula que se encuentra en el citoplasma de las células.", correct: false }, { text: "El ADN es una proteína que realiza funciones metabólicas.", correct: false }] },
+            { question: "¿Qué es la fotosíntesis y su importancia para los ecosistemas?", answers: [{ text: "Es el proceso mediante el cual las plantas convierten la luz solar en energía química; es crucial porque produce oxígeno y alimentos.", correct: true }, { text: "Es el proceso mediante el cual las plantas convierten el dióxido de carbono en oxígeno; es importante para la respiración de los animales.", correct: false }, { text: "Es el proceso mediante el cual las plantas absorben agua; es importante para el crecimiento de las plantas.", correct: false }] },
+            { question: "¿Qué es el ciclo del nitrógeno en un ecosistema?", answers: [{ text: "Es el ciclo biogeoquímico que describe el movimiento del nitrógeno a través de la atmósfera, el suelo y los organismos vivos.", correct: true }, { text: "Es el ciclo que describe el movimiento del carbono a través de los ecosistemas.", correct: false }, { text: "Es el ciclo que describe la absorción de nutrientes por las plantas.", correct: false }] },
+            { question: "¿Qué es la teoría de la endosimbiosis?", answers: [{ text: "La teoría que propone que las células eucariotas se originaron a partir de simbiosis entre células procariotas.", correct: true }, { text: "La teoría que sugiere que las células procariotas evolucionaron de las eucariotas.", correct: false }, { text: "La teoría que explica la evolución de las plantas a partir de los animales.", correct: false }] },
+            { question: "¿Qué es la genética y cómo influye en la herencia de los rasgos?", answers: [{ text: "La genética es el estudio de la herencia y la variación en los organismos; influye en la transmisión de rasgos de padres a hijos.", correct: true }, { text: "La genética es el estudio de las enfermedades; influye en la salud de los individuos.", correct: false }, { text: "La genética es el estudio de la evolución; influye en la adaptación de las especies.", correct: false }] },
+            { question: "¿Qué es un ecosistema y qué componentes lo forman?", answers: [{ text: "Un ecosistema es una comunidad de organismos que interactúan entre sí y con su ambiente; está formado por bioticos y abióticos.", correct: true }, { text: "Un ecosistema es una serie de organismos que viven en una zona; está formado solo por organismos vivos.", correct: false }, { text: "Un ecosistema es un grupo de especies que compiten por recursos; está formado solo por recursos naturales.", correct: false }] },
+            { question: "¿Qué es la evolución y cuáles son sus mecanismos principales?", answers: [{ text: "La evolución es el cambio en las características hereditarias de una población a lo largo del tiempo; sus mecanismos incluyen la selección natural, la mutación y la deriva genética.", correct: true }, { text: "La evolución es el desarrollo de nuevas especies; sus mecanismos incluyen la adaptación y la competencia.", correct: false }, { text: "La evolución es la adaptación a cambios ambientales; sus mecanismos incluyen el aprendizaje y la migración.", correct: false }] },
+            { question: "¿Qué es la simbiosis y qué tipos existen?", answers: [{ text: "La simbiosis es una interacción entre dos organismos de diferentes especies; los tipos incluyen mutualismo, comensalismo y parasitismo.", correct: true }, { text: "La simbiosis es una interacción entre organismos de la misma especie; los tipos incluyen cooperación y competencia.", correct: false }, { text: "La simbiosis es una relación entre organismos y su ambiente; los tipos incluyen adaptación y competencia.", correct: false }] },
+            { question: "¿Qué es la adaptación en biología?", answers: [{ text: "La adaptación es un cambio en los organismos que mejora su capacidad para sobrevivir y reproducirse en un entorno específico.", correct: true }, { text: "La adaptación es una respuesta temporal a condiciones ambientales.", correct: false }, { text: "La adaptación es una técnica de laboratorio para estudiar organismos.", correct: false }] },
+            { question: "¿Qué es la biotecnología y cómo se aplica en la ciencia?", answers: [{ text: "La biotecnología es el uso de organismos vivos o sus productos para desarrollar tecnologías y aplicaciones; se aplica en áreas como la medicina, la agricultura y la industria.", correct: true }, { text: "La biotecnología es el estudio de la estructura de los organismos vivos; se aplica en la clasificación de especies.", correct: false }, { text: "La biotecnología es la ingeniería de sistemas biológicos; se aplica en la producción de energía renovable.", correct: false }] },
+            { question: "¿Qué es el ADN y cómo se replica?", answers: [{ text: "El ADN es el material genético que contiene instrucciones para el desarrollo de organismos; se replica mediante la separación de sus cadenas y la síntesis de nuevas cadenas complementarias.", correct: true }, { text: "El ADN es una proteína que controla las funciones celulares; se replica mediante la división celular.", correct: false }, { text: "El ADN es una molécula de energía; se replica mediante la transferencia de energía entre células.", correct: false }] }
         ];
 
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function loadQuiz() {
-            const quizContainer = document.getElementById('quiz');
-            quizContainer.innerHTML = '';
-            shuffle(quizData).forEach((data, index) => {
-                const questionContainer = document.createElement('div');
-                questionContainer.className = 'question';
-
-                const questionTitle = document.createElement('h3');
-                questionTitle.innerText = `${index + 1}. ${data.question}`;
-                questionContainer.appendChild(questionTitle);
-
-                const optionsList = document.createElement('ul');
-                optionsList.className = 'options';
-
-                shuffle(data.answers).forEach(answer => {
-                    const option = document.createElement('li');
-                    const optionLabel = document.createElement('label');
-                    const optionInput = document.createElement('input');
-                    optionInput.type = 'radio';
-                    optionInput.name = `question${index}`;
-                    optionInput.value = answer.correct;
-                    optionLabel.appendChild(optionInput);
-                    optionLabel.appendChild(document.createTextNode(answer.text));
-                    option.appendChild(optionLabel);
-                    optionsList.appendChild(option);
-                });
-
-                questionContainer.appendChild(optionsList);
-                quizContainer.appendChild(questionContainer);
-            });
-        }
-
-        function submitQuiz() {
-            const fullname = document.getElementById('fullname').value;
-            const nie = document.getElementById('nie').value;
-
-            if (!fullname || !nie) {
-                alert('Por favor, ingrese su nombre completo y NIE.');
-                return;
-            }
-
-            const answers = document.querySelectorAll('input[type="radio"]:checked');
-            let score = 0;
-
-            quizData.forEach((data, index) => {
-                const selected = answers[index] ? answers[index].value === 'true' : null;
-                if (selected === true) {
-                    score += 0.4; // Cada respuesta correcta vale 0.4 puntos
-                }
-            });
-
-            score = Math.round(score * 10) / 10; // Redondear a un decimal
-
-            let feedback = quizData.map((data, index) => {
-                const selected = answers[index] ? answers[index].value === 'true' : null;
-                let result;
-                if (selected === null) {
-                    result = "No contestada";
-                } else if (selected === true) {
-                    result = "Correcta";
-                } else {
-                    result = "Incorrecta";
-                }
-                return `<p>${index + 1}. ${result}</p>`;
-            }).join("");
-
-            document.getElementById('modalName').innerText = `Nombre: ${fullname}`;
-            document.getElementById('modalNIE').innerText = `NIE: ${nie}`;
-            document.getElementById('modalScore').innerText = `Puntaje: ${score} / 10`;
-            document.getElementById('modalAnswers').innerHTML = `<h3>Detalles de las respuestas</h3>${feedback}`;
-
-            const modal = document.getElementById('resultModal');
-            modal.style.display = 'block';
-        }
-
-        document.getElementById('submit').addEventListener('click', submitQuiz);
-
-        // Modal close
+        const quizContainer = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit');
+        const resultModal = document.getElementById('resultModal');
         const closeModal = document.querySelector('.close');
-        closeModal.onclick = function() {
-            const modal = document.getElementById('resultModal');
-            modal.style.display = 'none';
+        const modalName = document.getElementById('modalName');
+        const modalNIE = document.getElementById('modalNIE');
+        const modalScore = document.getElementById('modalScore');
+        const modalAnswers = document.getElementById('modalAnswers');
+
+        function generateQuiz() {
+            let html = '';
+            quizData.forEach((questionData, index) => {
+                html += `<div class="question">
+                    <h2>Pregunta ${index + 1}: ${questionData.question}</h2>
+                    <ul class="options">
+                        ${questionData.answers.map((answer, i) => `
+                            <li>
+                                <input type="radio" name="q${index}" id="q${index}a${i}" value="${i}">
+                                <label for="q${index}a${i}">${answer.text}</label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>`;
+            });
+            quizContainer.innerHTML = html;
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('resultModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+        function calculateScore() {
+            let score = 0;
+            quizData.forEach((questionData, index) => {
+                const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selectedAnswer) {
+                    const answerIndex = selectedAnswer.value;
+                    if (questionData.answers[answerIndex].correct) {
+                        score++;
+                    }
+                }
+            });
+            return score;
+        }
+
+        function showResult() {
+            const score = calculateScore();
+            const percentage = (score / quizData.length) * 10;
+            const name = prompt('Por favor, ingrese su nombre:');
+            const NIE = prompt('Por favor, ingrese su NIE:');
+            modalName.textContent = `Nombre: ${name}`;
+            modalNIE.textContent = `NIE: ${NIE}`;
+            modalScore.textContent = `Calificación obtenida: ${score} de ${quizData.length}`;
+            modalAnswers.innerHTML = `<h3>Respuestas correctas:</h3><ul>${quizData.map((questionData, index) => `
+                <li>Pregunta ${index + 1}: ${questionData.answers.find(answer => answer.correct).text}</li>
+            `).join('')}</ul>`;
+            resultModal.style.display = 'block';
+        }
+
+        submitButton.addEventListener('click', showResult);
+
+        closeModal.addEventListener('click', () => {
+            resultModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === resultModal) {
+                resultModal.style.display = 'none';
             }
-        }
+        });
 
-        loadQuiz();
+        generateQuiz();
     </script>
 </body>
 </html>
