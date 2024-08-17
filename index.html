@@ -3,323 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unidad 1: El Trabajo Científico</title>
+    <title>Evaluación Unidad 1: El Trabajo Científico</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
             padding: 20px;
         }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
+        #timer {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .hidden {
             display: none;
         }
-        h1, h2 {
-            text-align: center;
-        }
         .question {
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
-        .question label {
-            font-weight: bold;
-            display: block;
+        .question h3 {
             margin-bottom: 10px;
         }
-        .question .options {
-            margin-left: 20px;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
         }
-        .question .options input {
-            margin-right: 10px;
+        #resultsModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
         }
-        .popup {
+        #overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            justify-content: center;
-            align-items: center;
-        }
-        .popup-content {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
-        .popup-content input {
-            margin-bottom: 20px;
-            padding: 15px;
-            width: 80%;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .popup-content button {
-            padding: 15px 30px;
-            background-color: #28a745;
-            color: #fff;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button.submit-btn {
-            padding: 15px 30px;
-            background-color: #007bff;
-            color: #fff;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: block;
-            width: 100%;
-            text-align: center;
-        }
-        button.submit-btn:hover {
-            background-color: #0056b3;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 500;
         }
     </style>
 </head>
 <body>
+    <div id="timer" class="hidden">Tiempo restante: <span id="time">30:00</span></div>
 
-<div class="popup" id="popup">
-    <div class="popup-content">
-        <h2>Complete la siguiente información</h2>
-        <input type="text" id="nombre" placeholder="Nombre Completo" required>
-        <input type="text" id="nie" placeholder="NIE" required>
-        <button onclick="validatePopup()">Continuar</button>
-    </div>
-</div>
-
-<div class="container" id="evaluation">
-    <h1>Unidad 1: El Trabajo Científico</h1>
-
-    <!-- Indicador 1.1 -->
-    <h2>Indicador 1.1: Importancia de la ética en la investigación científica</h2>
-    <div class="question">
-        <label>1. ¿Por qué es importante la ética en la investigación científica?</label>
-        <div class="options">
-            <label><input type="radio" name="q1" value="correcto" required> A. Para garantizar que los resultados sean confiables y responsables.</label><br>
-            <label><input type="radio" name="q1" value="incorrecto" required> B. Porque es opcional en algunas investigaciones.</label><br>
-            <label><input type="radio" name="q1" value="incorrecto" required> C. Para evitar la competencia entre científicos.</label><br>
-            <label><input type="radio" name="q1" value="incorrecto" required> D. Para asegurar que todos los experimentos sean exitosos.</label>
+    <div class="container">
+        <div id="studentInfoForm">
+            <h2>Información del Estudiante</h2>
+            <form id="infoForm">
+                <label for="name">Nombre del Estudiante:</label>
+                <input type="text" id="name" required><br><br>
+                <label for="nie">NIE:</label>
+                <input type="text" id="nie" required><br><br>
+                <label for="unit">Unidad Evaluada:</label>
+                <input type="text" id="unit" value="Unidad 1: El Trabajo Científico" readonly><br><br>
+                <button type="submit">Iniciar Evaluación</button>
+            </form>
         </div>
-    </div>
 
-    <div class="question">
-        <label>2. ¿Qué podría pasar si no se sigue la ética en la investigación?</label>
-        <div class="options">
-            <label><input type="radio" name="q2" value="correcto" required> A. Los resultados podrían ser manipulados o falsificados.</label><br>
-            <label><input type="radio" name="q2" value="incorrecto" required> B. Los resultados serían más precisos.</label><br>
-            <label><input type="radio" name="q2" value="incorrecto" required> C. No habría ningún impacto negativo.</label><br>
-            <label><input type="radio" name="q2" value="incorrecto" required> D. Los científicos tendrían más libertad.</label>
+        <div id="quiz" class="hidden">
+            <h2>Evaluación Unidad 1: El Trabajo Científico</h2>
+
+            <div id="questions-container"></div>
+
+            <button id="submitQuiz">OBTENER CALIFICACIÓN</button>
         </div>
-    </div>
 
-    <div class="question">
-        <label>3. ¿Cuál es un principio fundamental de la ética en la investigación científica?</label>
-        <div class="options">
-            <label><input type="radio" name="q3" value="correcto" required> A. La honestidad en la recolección y presentación de datos.</label><br>
-            <label><input type="radio" name="q3" value="incorrecto" required> B. Eludir las reglas establecidas por instituciones científicas.</label><br>
-            <label><input type="radio" name="q3" value="incorrecto" required> C. Promover el secretismo entre los investigadores.</label><br>
-            <label><input type="radio" name="q3" value="incorrecto" required> D. Asegurar que solo un científico se beneficie.</label>
+        <div id="resultsModal">
+            <h2>Resultados</h2>
+            <p id="date"></p>
+            <p id="timeTaken"></p>
+            <p id="unitEvaluated"></p>
+            <p id="studentName"></p>
+            <p id="studentNIE"></p>
+            <p id="score"></p>
+            <p id="incorrectAnswers"></p>
+            <button id="closeModal">Cerrar</button>
         </div>
+
+        <div id="overlay"></div>
     </div>
 
-    <div class="question">
-        <label>4. ¿Cómo la ética científica beneficia a la sociedad en general?</label>
-        <div class="options">
-            <label><input type="radio" name="q4" value="correcto" required> A. Asegurando que los descubrimientos sean usados para el bien común.</label><br>
-            <label><input type="radio" name="q4" value="incorrecto" required> B. Permitiendo la manipulación de datos para conseguir mejores resultados.</label><br>
-            <label><input type="radio" name="q4" value="incorrecto" required> C. Facilitando la explotación de recursos sin limitaciones éticas.</label><br>
-            <label><input type="radio" name="q4" value="incorrecto" required> D. Evitando la publicación de resultados negativos.</label>
-        </div>
-    </div>
+    <script>
+        const nieList = ["4267837", "3850952", "3851018", "5032035", "19806181", "6297536", "2608724", "6262810", "4267838", "20162435", "3850923", "19806209", "4267828", "3850942"];
+        const maxTime = 30 * 60; // 30 minutos en segundos
+        let timeRemaining = maxTime;
+        const timerElement = document.getElementById('time');
+        let startTime;
 
-    <div class="question">
-        <label>5. ¿Cuál es una consecuencia de la falta de ética en la investigación científica?</label>
-        <div class="options">
-            <label><input type="radio" name="q5" value="correcto" required> A. Desconfianza pública en los resultados científicos.</label><br>
-            <label><input type="radio" name="q5" value="incorrecto" required> B. Mayor credibilidad en la ciencia.</label><br>
-            <label><input type="radio" name="q5" value="incorrecto" required> C. Avances científicos más rápidos.</label><br>
-            <label><input type="radio" name="q5" value="incorrecto" required> D. Mejores relaciones entre científicos.</label>
-        </div>
-    </div>
-
-    <div class="question">
-        <label>6. ¿Qué debe hacer un científico si encuentra un error en su investigación después de publicar los resultados?</label>
-        <div class="options">
-            <label><input type="radio" name="q6" value="correcto" required> A. Publicar una corrección o retractarse si es necesario.</label><br>
-            <label><input type="radio" name="q6" value="incorrecto" required> B. Ignorar el error y seguir adelante.</label><br>
-            <label><input type="radio" name="q6" value="incorrecto" required> C. Ocultar el error para evitar críticas.</label><br>
-            <label><input type="radio" name="q6" value="incorrecto" required> D. Culpar a otros colaboradores por el error.</label>
-        </div>
-    </div>
-
-    <!-- Indicador 1.2 -->
-    <h2>Indicador 1.2: Avances científicos y tecnológicos en el planeta</h2>
-    <div class="question">
-        <label>7. ¿Qué impacto ha tenido la revolución digital en la ciencia moderna?</label>
-        <div class="options">
-            <label><input type="radio" name="q7" value="correcto" required> A. Ha acelerado la investigación y la comunicación científica.</label><br>
-            <label><input type="radio" name="q7" value="incorrecto" required> B. Ha disminuido la importancia de la ciencia.</label><br>
-            <label><input type="radio" name="q7" value="incorrecto" required> C. No ha tenido ningún impacto significativo.</label><br>
-            <label><input type="radio" name="q7" value="incorrecto" required> D. Ha causado más problemas que beneficios.</label>
-        </div>
-    </div>
-
-    <div class="question">
-        <label>8. ¿Cuál de los siguientes es un avance significativo en la medicina moderna?</label>
-        <div class="options">
-            <label><input type="radio" name="q8" value="correcto" required> A. El desarrollo de la terapia génica.</label><br>
-            <label><input type="radio" name="q8" value="incorrecto" required> B. El uso de sanguijuelas para curar enfermedades.</label><br>
-            <label><input type="radio" name="q8" value="incorrecto" required> C. La creencia en tratamientos no comprobados.</label><br>
-            <label><input type="radio" name="q8" value="incorrecto" required> D. El rechazo de las vacunas.</label>
-        </div>
-    </div>
-
-    <div class="question">
-        <label>9. ¿Cómo ha influido la inteligencia artificial en la investigación científica reciente?</label>
-        <div class="options">
-            <label><input type="radio" name="q9" value="correcto" required> A. Ha permitido la automatización y análisis de grandes volúmenes de datos.</label><br>
-            <label><input type="radio" name="q9" value="incorrecto" required> B. Ha reducido la necesidad de experimentos científicos.</label><br>
-            <label><input type="radio" name="q9" value="incorrecto" required> C. Ha eliminado la necesidad de la revisión por pares.</label><br>
-            <label><input type="radio" name="q9" value="incorrecto" required> D. Ha hecho que la ciencia sea menos precisa.</label>
-        </div>
-    </div>
-
-    <div class="question">
-        <label>10. ¿Qué avance tecnológico ha revolucionado la comunicación de resultados científicos?</label>
-        <div class="options">
-            <label><input type="radio" name="q10" value="correcto" required> A. Internet y las plataformas digitales.</label><br>
-            <label><input type="radio" name="q10" value="incorrecto" required> B. La invención del teléfono.</label><br>
-            <label><input type="radio" name="q10" value="incorrecto" required> C. La televisión en blanco y negro.</label><br>
-            <label><input type="radio" name="q10" value="incorrecto" required> D. La impresión en papel.</label>
-        </div>
-    </div>
-
-    <div class="question">
-        <label>11. ¿Cuál es un ejemplo de cómo la tecnología ha mejorado la precisión en la investigación científica?</label>
-        <div class="options">
-            <label><input type="radio" name="q11" value="correcto" required> A. El uso de microscopios electrónicos para visualizar estructuras subatómicas.</label><br>
-            <label><input type="radio" name="q11" value="incorrecto" required> B. La realización de experimentos sin instrumentos de medición.</label><br>
-            <label><input type="radio" name="q11" value="incorrecto" required> C. El uso de la intuición en lugar de datos.</label><br>
-            <label><input type="radio" name="q11" value="incorrecto" required> D. El abandono de la tecnología en favor de métodos tradicionales.</label>
-        </div>
-    </div>
-
-    <div class="question">
-        <label>12. ¿Cómo ha cambiado el desarrollo de nuevas tecnologías la forma en que se realizan experimentos científicos?</label>
-        <div class="options">
-            <label><input type="radio" name="q12" value="correcto" required> A. Permitiendo experimentos más complejos y precisos.</label><br>
-            <label><input type="radio" name="q12" value="incorrecto" required> B. Haciendo que los experimentos sean innecesarios.</label><br>
-            <label><input type="radio" name="q12" value="incorrecto" required> C. Eliminando la necesidad de repetir experimentos.</label><br>
-            <label><input type="radio" name="q12" value="incorrecto" required> D. Simplificando todos los experimentos al punto de que no se necesite tecnología.</label>
-        </div>
-    </div>
-
-    <button class="submit-btn" onclick="calculateGrade()">Obtener Calificación</button>
-</div>
-
-<div class="popup" id="finalPopup" style="display: none;">
-    <div class="popup-content">
-        <h2>Resultado de la Evaluación</h2>
-        <p id="nombreFinal"></p>
-        <p id="nieFinal"></p>
-        <p id="gradeFinal"></p>
-        <p id="incorrectas"></p>
-        <button onclick="closePopup()">Cerrar</button>
-    </div>
-</div>
-
-<script>
-    const validNIEs = [
-        '4267837', '3850952', '3851018', '5032035', '19806181', 
-        '6297536', '2608724', '6262810', '4267838', '20162435', 
-        '3850923', '19806209', '4267828', '3850942'
-    ];
-
-    window.onload = function() {
-        document.getElementById('popup').style.display = 'flex';
-    };
-
-    function validatePopup() {
-        const nombre = document.getElementById('nombre').value;
-        const nie = document.getElementById('nie').value;
-
-        if (nombre === "" || nie === "") {
-            alert("Por favor, complete todos los campos.");
-        } else if (!validNIEs.includes(nie)) {
-            alert("NIE no autorizado.");
-        } else {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('evaluation').style.display = 'block';
-            startTimer();
-        }
-    }
-
-    function calculateGrade() {
-        const totalQuestions = document.querySelectorAll('.question').length;
-        const correctAnswers = document.querySelectorAll('input[type="radio"]:checked[value="correcto"]').length;
-        const maxPoints = 10;
-        const grade = (correctAnswers / totalQuestions) * maxPoints;
-        const incorrectQuestions = [];
-
-        document.querySelectorAll('.question').forEach((question, index) => {
-            const selectedOption = question.querySelector('input[type="radio"]:checked');
-            if (selectedOption && selectedOption.value === "incorrecto") {
-                incorrectQuestions.push(`Pregunta ${index + 1}`);
+        const questions = [
+            // Indicador 1.1
+            {
+                id: 'q1',
+                indicator: 'Indicador 1.1: Indaga y describe con interés la importancia de la ética en la investigación científica.',
+                question: "Un científico descubre un nuevo tratamiento para una enfermedad grave, pero los efectos secundarios aún no se han investigado completamente. ¿Debe el científico publicar los resultados preliminares para obtener reconocimiento rápido o esperar a tener todos los datos, incluso si eso significa perder la primicia?",
+                options: [
+                    { value: 'a', text: "Publicar los resultados inmediatamente para aprovechar el reconocimiento." },
+                    { value: 'b', text: "Esperar hasta tener todos los datos, priorizando la seguridad de los pacientes." },
+                    { value: 'c', text: "Compartir los resultados solo con colegas cercanos para obtener sus opiniones." },
+                    { value: 'd', text: "Publicar solo los resultados positivos y omitir los negativos." }
+                ]
+            },
+            {
+                id: 'q2',
+                indicator: 'Indicador 1.1: Indaga y describe con interés la importancia de la ética en la investigación científica.',
+                question: "Un grupo de investigadores recibe una oferta de una compañía farmacéutica para financiar su estudio, pero la compañía exige aprobar el informe final antes de su publicación. ¿Qué deberían hacer los investigadores?",
+                options: [
+                    { value: 'a', text: "Aceptar la oferta, ya que el financiamiento es necesario." },
+                    { value: 'b', text: "Rechazar la oferta para mantener la independencia de la investigación." },
+                    { value: 'c', text: "Negociar condiciones más flexibles con la compañía." },
+                    { value: 'd', text: "Aceptar la oferta y asegurarse de que la compañía no influya en los resultados." }
+                ]
+            },
+            {
+                id: 'q3',
+                indicator: 'Indicador 1.1: Indaga y describe con interés la importancia de la ética en la investigación científica.',
+                question: "Un estudiante de biología realiza un experimento y falsifica algunos de los resultados para que se ajusten a su hipótesis. ¿Qué implicaciones éticas tiene esta acción en la investigación científica?",
+                options: [
+                    { value: 'a', text: "No hay implicaciones si los resultados falsificados son menores." },
+                    { value: 'b', text: "Es una violación grave de la ética científica que puede desacreditar el estudio." },
+                    { value: 'c', text: "Está permitido si los resultados falsificados no cambian las conclusiones generales." },
+                    { value: 'd', text: "Es aceptable si ayuda a que el experimento tenga éxito." }
+                ]
+            },
+            {
+                id: 'q4',
+                indicator: 'Indicador 1.1: Indaga y describe con interés la importancia de la ética en la investigación científica.',
+                question: "Un investigador es testigo de que uno de sus colegas ha plagiado el trabajo de otro científico para incluirlo en su propio artículo. ¿Cómo debería proceder el investigador?",
+                options: [
+                    { value: 'a', text: "Ignorar la situación para evitar conflictos." },
+                    { value: 'b', text: "Confrontar al colega y pedirle que corrija la situación." },
+                    { value: 'c', text: "Reportar el plagio a las autoridades correspondientes de la institución." },
+                    { value: 'd', text: "Hablar con el científico afectado para que tome las medidas necesarias." }
+                ]
+            },
+            {
+                id: 'q5',
+                indicator: 'Indicador 1.1: Indaga y describe con interés la importancia de la ética en la investigación científica.',
+                question: "Una investigación médica necesita probar un nuevo medicamento en seres humanos, pero no todos los participantes han sido informados de los riesgos potenciales. ¿Es ético continuar con la investigación en estas condiciones?",
+                options: [
+                    { value: 'a', text: "Sí, si los beneficios del medicamento son mayores que los riesgos." },
+                    { value: 'b', text: "No, todos los participantes deben estar completamente informados." },
+                    { value: 'c', text: "Sí, siempre y cuando los riesgos sean mínimos." },
+                    { value: 'd', text: "No, pero se puede continuar si los riesgos son comunicados después." }
+                ]
+            },
+            // Indicador 1.2
+            {
+                id: 'q6',
+                indicator: 'Indicador 1.2: Describe y analiza con interés los principales avances científicos y tecnológicos en el planeta.',
+                question: "La edición genética a través de CRISPR ha permitido avances significativos en la medicina, pero también plantea riesgos éticos y sociales. ¿Cómo debería la sociedad regular el uso de esta tecnología?",
+                options: [
+                    { value: 'a', text: "Permitir su uso solo en casos de enfermedades incurables." },
+                    { value: 'b', text: "Regular estrictamente su uso para evitar riesgos imprevistos." },
+                    { value: 'c', text: "Dejar que el mercado regule su desarrollo sin intervención estatal." },
+                    { value: 'd', text: "Prohibir completamente su uso hasta que se comprendan todos los riesgos." }
+                ]
+            },
+            {
+                id: 'q7',
+                indicator: 'Indicador 1.2: Describe y analiza con interés los principales avances científicos y tecnológicos en el planeta.',
+                question: "El desarrollo de la inteligencia artificial (IA) está revolucionando muchos campos, desde la medicina hasta el entretenimiento. ¿Cuáles son los posibles impactos de la IA en la sociedad y en el empleo?",
+                options: [
+                    { value: 'a', text: "Desplazamiento masivo de empleos humanos sin alternativas." },
+                    { value: 'b', text: "Creación de nuevos empleos y oportunidades en sectores tecnológicos." },
+                    { value: 'c', text: "Desigualdad social creciente debido a la concentración de tecnología." },
+                    { value: 'd', text: "Mejora de la calidad de vida y eficiencia en diversas industrias." }
+                ]
+            },
+            {
+                id: 'q8',
+                indicator: 'Indicador 1.2: Describe y analiza con interés los principales avances científicos y tecnológicos en el planeta.',
+                question: "El descubrimiento de nuevos exoplanetas en zonas habitables ha incrementado el interés en la exploración espacial. ¿Qué importancia tiene este avance para el futuro de la humanidad?",
+                options: [
+                    { value: 'a', text: "Es irrelevante, ya que la humanidad nunca podrá colonizar otros planetas." },
+                    { value: 'b', text: "Es crucial, ya que puede asegurar la supervivencia a largo plazo de la especie humana." },
+                    { value: 'c', text: "Es importante solo para la comunidad científica." },
+                    { value: 'd', text: "Es relevante únicamente si estos planetas son fácilmente accesibles." }
+                ]
+            },
+            {
+                id: 'q9',
+                indicator: 'Indicador 1.2: Describe y analiza con interés los principales avances científicos y tecnológicos en el planeta.',
+                question: "La energía nuclear ha avanzado como una fuente de energía limpia, pero los desechos radiactivos siguen siendo un problema no resuelto. ¿Cómo se podría mejorar la seguridad en el uso de la energía nuclear?",
+                options: [
+                    { value: 'a', text: "Almacenar los desechos en depósitos subterráneos en zonas deshabitadas." },
+                    { value: 'b', text: "Invertir en investigación para encontrar formas de reciclar los desechos radiactivos." },
+                    { value: 'c', text: "Reducir la dependencia de la energía nuclear en favor de energías renovables." },
+                    { value: 'd', text: "Utilizar reactores nucleares más pequeños y seguros." }
+                ]
+            },
+            {
+                id: 'q10',
+                indicator: 'Indicador 1.2: Describe y analiza con interés los principales avances científicos y tecnológicos en el planeta.',
+                question: "La biotecnología ha permitido la creación de cultivos genéticamente modificados (GM) que son más resistentes a plagas y condiciones climáticas adversas. ¿Cuáles son los beneficios y los riesgos de adoptar estos cultivos a gran escala?",
+                options: [
+                    { value: 'a', text: "Beneficios: Mayor productividad agrícola; Riesgos: Impacto negativo en la biodiversidad." },
+                    { value: 'b', text: "Beneficios: Reducción del uso de pesticidas; Riesgos: Aumento de alergias en la población." },
+                    { value: 'c', text: "Beneficios: Mejora de la seguridad alimentaria; Riesgos: Resistencia de plagas a los cultivos GM." },
+                    { value: 'd', text: "Beneficios: Mejora del valor nutricional; Riesgos: Dependencia de las semillas patentadas." }
+                ]
+            },
+            // Indicador 1.3
+            {
+                id: 'q11',
+                indicator: 'Indicador 1.3: Indaga e identifica con interés instituciones que realizan investigación científica en El Salvador.',
+                question: "Un estudiante quiere saber cuáles son las principales universidades en El Salvador que están involucradas en la investigación científica. ¿Cómo podría obtener esta información y qué importancia tiene la investigación en estas universidades?",
+                options: [
+                    { value: 'a', text: "Consultar directamente con las universidades y buscar sus publicaciones." },
+                    { value: 'b', text: "Revisar el ranking mundial de universidades para obtener información relevante." },
+                    { value: 'c', text: "Preguntar a profesores y académicos de renombre en el país." },
+                    { value: 'd', text: "Utilizar redes sociales y foros en línea para buscar recomendaciones." }
+                ]
+            },
+            {
+                id: 'q12',
+                indicator: 'Indicador 1.3: Indaga e identifica con interés instituciones que realizan investigación científica en El Salvador.',
+                question: "Un grupo de jóvenes está interesado en proyectos de investigación sobre energías renovables. ¿Qué instituciones en El Salvador podrían apoyar estos proyectos y cómo?",
+                options: [
+                    { value: 'a', text: "Consultar con el Ministerio de Medio Ambiente y Recursos Naturales (MARN)." },
+                    { value: 'b', text: "Buscar apoyo en universidades con programas de ingeniería ambiental." },
+                    { value: 'c', text: "Contactar a ONGs internacionales que operan en El Salvador." },
+                    { value: 'd', text: "Recurrir a empresas privadas dedicadas a la energía renovable." }
+                ]
+            },
+            {
+                id: 'q13',
+                indicator: 'Indicador 1.3: Indaga e identifica con interés instituciones que realizan investigación científica en El Salvador.',
+                question: "Un profesor quiere que sus alumnos visiten un laboratorio donde se realicen investigaciones en biotecnología. ¿Qué instituciones en El Salvador ofrecen este tipo de investigaciones y visitas educativas?",
+                options: [
+                    { value: 'a', text: "El Instituto de Ciencia, Tecnología e Innovación (ICTI)." },
+                    { value: 'b', text: "La Universidad de El Salvador, Facultad de Ciencias Naturales y Matemática." },
+                    { value: 'c', text: "Empresas privadas de biotecnología que tienen programas de visitas." },
+                    { value: 'd', text: "Centros de investigación como el Centro Nacional de Investigaciones en Ciencias y Humanidades (CENICSH)." }
+                ]
+            },
+            {
+                id: 'q14',
+                indicator: 'Indicador 1.3: Indaga e identifica con interés instituciones que realizan investigación científica en El Salvador.',
+                question: "Un estudiante de medicina desea realizar prácticas en un instituto de investigación. ¿Qué institutos en El Salvador están enfocados en la investigación médica y cómo puede postularse para una pasantía?",
+                options: [
+                    { value: 'a', text: "El Instituto Salvadoreño del Seguro Social (ISSS) con un enfoque en investigación clínica." },
+                    { value: 'b', text: "El Instituto de Investigaciones Científicas y Tecnológicas de la Universidad de El Salvador." },
+                    { value: 'c', text: "Clínicas privadas que realizan investigaciones farmacológicas." },
+                    { value: 'd', text: "Contactar con el Consejo Nacional de Ciencia y Tecnología (CONACYT) para programas de prácticas." }
+                ]
+            },
+            {
+                id: 'q15',
+                indicator: 'Indicador 1.3: Indaga e identifica con interés instituciones que realizan investigación científica en El Salvador.',
+                question: "Un periodista está investigando sobre las iniciativas científicas en El Salvador relacionadas con el cambio climático. ¿Qué organizaciones gubernamentales o no gubernamentales en el país están involucradas en este tipo de investigación?",
+                options: [
+                    { value: 'a', text: "El Ministerio de Medio Ambiente y Recursos Naturales (MARN)." },
+                    { value: 'b', text: "ONGs como FUSADES que trabajan en el desarrollo sostenible." },
+                    { value: 'c', text: "Universidades que tienen programas de investigación en ciencias ambientales." },
+                    { value: 'd', text: "Empresas privadas interesadas en mitigación del cambio climático." }
+                ]
+            },
+            // Indicador 1.4
+            {
+                id: 'q16',
+                indicator: 'Indicador 1.4: Indaga y describe con interés y actitud crítica los avances científicos y tecnológicos en El Salvador.',
+                question: "Recientemente, un grupo de investigadores salvadoreños ha desarrollado una técnica innovadora para el cultivo de café resistente a enfermedades. ¿Qué impacto podría tener este avance en la economía del país?",
+                options: [
+                    { value: 'a', text: "Incremento en las exportaciones y mejora de la economía local." },
+                    { value: 'b', text: "Disminución de la calidad del café salvadoreño en el mercado internacional." },
+                    { value: 'c', text: "Mayor dependencia de insumos tecnológicos para los pequeños agricultores." },
+                    { value: 'd', text: "Creación de monopolios agrícolas en la industria cafetera." }
+                ]
+            },
+            {
+                id: 'q17',
+                indicator: 'Indicador 1.4: Indaga y describe con interés y actitud crítica los avances científicos y tecnológicos en El Salvador.',
+                question: "El Salvador ha implementado un programa para promover la energía solar en comunidades rurales. ¿Cuáles son los desafíos y beneficios de esta iniciativa para el desarrollo sostenible en el país?",
+                options: [
+                    { value: 'a', text: "Beneficios: Acceso a energía limpia; Desafíos: Costo inicial elevado para las comunidades." },
+                    { value: 'b', text: "Beneficios: Reducción de la dependencia de combustibles fósiles; Desafíos: Mantenimiento de los equipos solares." },
+                    { value: 'c', text: "Beneficios: Creación de empleos en el sector energético; Desafíos: Infraestructura insuficiente en áreas remotas." },
+                    { value: 'd', text: "Beneficios: Mejora de la calidad de vida en zonas rurales; Desafíos: Capacitación técnica insuficiente para la población local." }
+                ]
+            },
+            {
+                id: 'q18',
+                indicator: 'Indicador 1.4: Indaga y describe con interés y actitud crítica los avances científicos y tecnológicos en El Salvador.',
+                question: "Un equipo de científicos salvadoreños ha comenzado a estudiar los efectos del cambio climático en la biodiversidad local. ¿Cómo pueden estos estudios ayudar a la conservación del medio ambiente en El Salvador?",
+                options: [
+                    { value: 'a', text: "Proporcionando datos para la creación de políticas ambientales efectivas." },
+                    { value: 'b', text: "Incrementando la conciencia pública sobre la importancia de la biodiversidad." },
+                    { value: 'c', text: "Asegurando fondos internacionales para proyectos de conservación." },
+                    { value: 'd', text: "Identificando especies clave para programas de conservación." }
+                ]
+            },
+            {
+                id: 'q19',
+                indicator: 'Indicador 1.4: Indaga y describe con interés y actitud crítica los avances científicos y tecnológicos en El Salvador.',
+                question: "En El Salvador, se ha desarrollado una nueva aplicación móvil para la gestión de residuos. ¿Qué impacto podría tener esta tecnología en la reducción de la contaminación?",
+                options: [
+                    { value: 'a', text: "Reducción significativa de la contaminación en áreas urbanas." },
+                    { value: 'b', text: "Mejora de la eficiencia en la recolección y reciclaje de residuos." },
+                    { value: 'c', text: "Creación de un sistema más transparente de gestión de residuos." },
+                    { value: 'd', text: "Posible incremento de la informalidad en la recolección de residuos." }
+                ]
+            },
+            {
+                id: 'q20',
+                indicator: 'Indicador 1.4: Indaga y describe con interés y actitud crítica los avances científicos y tecnológicos en El Salvador.',
+                question: "La investigación sobre el uso de biocombustibles a partir de recursos locales en El Salvador ha ganado atención. ¿Qué retos enfrentan estos proyectos y cómo pueden contribuir al desarrollo energético del país?",
+                options: [
+                    { value: 'a', text: "Reto: Limitada producción de materia prima; Contribución: Reducción de la dependencia de combustibles importados." },
+                    { value: 'b', text: "Reto: Conflicto con la producción de alimentos; Contribución: Desarrollo de tecnologías de cultivo." },
+                    { value: 'c', text: "Reto: Alto costo de producción; Contribución: Creación de empleos en el sector agrícola." },
+                    { value: 'd', text: "Reto: Escasa infraestructura de distribución; Contribución: Promoción de la autosuficiencia energética en comunidades rurales." }
+                ]
             }
+        ];
+
+        const correctAnswerKeys = { 
+            q1: 'b', q2: 'b', q3: 'b', q4: 'c', q5: 'b', 
+            q6: 'b', q7: 'b', q8: 'b', q9: 'b', q10: 'a', 
+            q11: 'a', q12: 'b', q13: 'b', q14: 'b', q15: 'a', 
+            q16: 'a', q17: 'b', q18: 'a', q19: 'b', q20: 'a'
+        };
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function displayQuestions() {
+            const container = document.getElementById('questions-container');
+            const shuffledQuestions = shuffle([...questions]);
+
+            shuffledQuestions.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+                questionElement.innerHTML = `
+                    <h3>${q.indicator}</h3>
+                    <p>${index + 1}. ${q.question}</p>
+                    ${q.options.map(option => `
+                        <input type="radio" name="${q.id}" value="${option.value}" required> ${option.value}) ${option.text}<br>
+                    `).join('')}
+                `;
+                container.appendChild(questionElement);
+            });
+        }
+
+        function startTimer() {
+            document.getElementById('timer').classList.remove('hidden');
+            startTime = new Date();
+            const timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                if (timeRemaining === 0) {
+                    clearInterval(timerInterval);
+                    showResults("Tiempo agotado. No se pudo completar la evaluación.", []);
+                }
+                timeRemaining--;
+            }, 1000);
+        }
+
+        document.getElementById('infoForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const nie = document.getElementById('nie').value;
+
+            if (!nieList.includes(nie)) {
+                alert("NIE no autorizado.");
+                return;
+            }
+
+            document.getElementById('studentInfoForm').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+            displayQuestions();
+            startTimer();
         });
 
-        document.getElementById('nombreFinal').textContent = "Nombre: " + document.getElementById('nombre').value;
-        document.getElementById('nieFinal').textContent = "NIE: " + document.getElementById('nie').value;
-        document.getElementById('gradeFinal').textContent = "Su calificación es: " + grade.toFixed(2) + " de " + maxPoints;
-        document.getElementById('incorrectas').textContent = "Incorrectas: " + (incorrectQuestions.length > 0 ? incorrectQuestions.join(", ") : "Ninguna");
+        document.getElementById('submitQuiz').addEventListener('click', function () {
+            let correctAnswers = 0;
+            let incorrectAnswers = [];
 
-        document.getElementById('finalPopup').style.display = 'flex';
-    }
+            questions.forEach(q => {
+                const selectedAnswer = document.querySelector(`input[name="${q.id}"]:checked`);
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswerKeys[q.id]) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers.push(`Pregunta ${q.id.substring(1)} incorrecta.`);
+                    }
+                }
+            });
 
-    function closePopup() {
-        document.getElementById('finalPopup').style.display = 'none';
-    }
+            const score = (correctAnswers / questions.length) * 10;
+            const endTime = new Date();
+            const timeTaken = Math.floor((endTime - startTime) / 1000); // Tiempo en segundos
 
-    function startTimer() {
-        const timer = document.createElement('div');
-        timer.id = 'timer';
-        timer.style.position = 'fixed';
-        timer.style.top = '10px';
-        timer.style.right = '10px';
-        timer.style.backgroundColor = '#fff';
-        timer.style.padding = '10px';
-        timer.style.borderRadius = '5px';
-        timer.style.boxShadow = '0 0 10px rgba(0,0,0,0.3)';
-        document.body.appendChild(timer);
+            showResults(`Calificación: ${score.toFixed(2)} / 10`, incorrectAnswers, timeTaken);
+        });
 
-        let timeLeft = 1800; // 30 minutes in seconds
-        const countdown = setInterval(() => {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timer.textContent = `Tiempo restante: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            timeLeft--;
+        function showResults(scoreText, incorrectAnswers, timeTaken) {
+            const date = new Date();
+            const minutesTaken = Math.floor(timeTaken / 60);
+            const secondsTaken = timeTaken % 60;
 
-            if (timeLeft < 0) {
-                clearInterval(countdown);
-                alert("El tiempo ha terminado.");
-                calculateGrade();
-            }
-        }, 1000);
-    }
-</script>
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('resultsModal').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
 
+            document.getElementById('date').textContent = `Fecha: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
+            document.getElementById('timeTaken').textContent = `Tiempo tomado: ${minutesTaken} minutos y ${secondsTaken} segundos`;
+            document.getElementById('unitEvaluated').textContent = `Unidad Evaluada: Unidad 1: El Trabajo Científico`;
+            document.getElementById('studentName').textContent = `Nombre del Estudiante: ${document.getElementById('name').value}`;
+            document.getElementById('studentNIE').textContent = `NIE: ${document.getElementById('nie').value}`;
+            document.getElementById('score').textContent = scoreText;
+            document.getElementById('incorrectAnswers').textContent = incorrectAnswers.join(', ');
+        }
+
+        document.getElementById('closeModal').addEventListener('click', function () {
+            document.getElementById('resultsModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
