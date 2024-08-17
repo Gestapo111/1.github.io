@@ -86,6 +86,11 @@
         button.submit-btn:hover {
             background-color: #0056b3;
         }
+        #timer {
+            text-align: center;
+            font-size: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -99,10 +104,9 @@
     </div>
 </div>
 
-<div class="container" id="evaluation">
+<div class="container" id="evaluation" style="display:none;">
     <h1>Unidad 1: El estudio de las Ciencias Naturales</h1>
-
-    <!-- Indicador 1.1 -->
+    <div id="timer">Tiempo restante: 30:00</div>
     <h2>Indicador 1.1: Relaciones de la ciencia, tecnología, sociedad y el medio ambiente</h2>
     <div class="question">
         <label>1. Un nuevo dispositivo tecnológico reduce el consumo de energía en los hogares, pero genera residuos tóxicos. ¿Qué aspecto debe priorizarse?</label>
@@ -528,9 +532,7 @@
             <label><input type="radio" name="q40" value="incorrecto"> C. La magnitud de la fuerza.</label><br>
             <label><input type="radio" name="q40" value="incorrecto"> D. El cambio en la temperatura.</label>
         </div>
-    </div>
-
-    <button class="submit-btn" onclick="calculateGrade()">Obtener Calificación</button>
+     <button class="submit-btn" onclick="calculateGrade()">Obtener Calificación</button>
 </div>
 
 <div class="popup" id="finalPopup" style="display: none;">
@@ -544,26 +546,53 @@
 </div>
 
 <script>
+    const authorizedNIEs = [
+        "4839280", "19711634", "4839293", "6297544", "19711644",
+        "3850927", "19711635", "4267835", "3293986", "19711278",
+        "19711637", "4267839", "19806177", "4839298", "4267832",
+        "4267843", "4839279", "4839301", "19964688"
+    ];
+
+    let timer;
+    let totalSeconds = 1800;
+
     window.onload = function() {
         document.getElementById('popup').style.display = 'flex';
     };
 
     function validatePopup() {
-        var nombre = document.getElementById('nombre').value;
-        var nie = document.getElementById('nie').value;
+        const nombre = document.getElementById('nombre').value;
+        const nie = document.getElementById('nie').value;
 
         if (nombre === "" || nie === "") {
             alert("Por favor, complete todos los campos.");
+        } else if (!authorizedNIEs.includes(nie)) {
+            alert("NIE no autorizado.");
         } else {
             document.getElementById('popup').style.display = 'none';
+            document.getElementById('evaluation').style.display = 'block';
+            startTimer();
         }
     }
 
+    function startTimer() {
+        timer = setInterval(function() {
+            totalSeconds--;
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            document.getElementById('timer').textContent = `Tiempo restante: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+            if (totalSeconds <= 0) {
+                clearInterval(timer);
+                calculateGrade();
+            }
+        }, 1000);
+    }
+
     function calculateGrade() {
-        var totalQuestions = document.querySelectorAll('.question').length;
-        var correctAnswers = document.querySelectorAll('input[type="radio"]:checked[value="correcto"]').length;
-        var maxPoints = 10;
-        var grade = (correctAnswers / totalQuestions) * maxPoints;
+        const totalQuestions = document.querySelectorAll('.question').length;
+        const correctAnswers = document.querySelectorAll('input[type="radio"]:checked[value="correcto"]').length;
+        const maxPoints = 10;
+        const grade = (correctAnswers / totalQuestions) * maxPoints;
 
         document.getElementById('nombreFinal').textContent = "Nombre: " + document.getElementById('nombre').value;
         document.getElementById('nieFinal').textContent = "NIE: " + document.getElementById('nie').value;
