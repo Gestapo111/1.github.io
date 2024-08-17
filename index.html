@@ -1,4 +1,11 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Evaluación: El Estudio de las Ciencias Naturales</title><style>body {
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación: El Estudio de las Ciencias Naturales</title>
+    <style>
+        body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             margin: 0;
@@ -13,9 +20,9 @@
         .quiz-container {
             background-color: #fff;
             padding: 20px;
-            margin: 20px0;
+            margin: 20px 0;
             border-radius: 10px;
-            box-shadow: 0010pxrgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
             max-width: 900px;
         }
@@ -26,14 +33,14 @@
             list-style-type: none;
             padding: 0;
         }
-        .optionsli {
+        .options li {
             margin-bottom: 10px;
         }
         button {
             background-color: #28a745;
             color: #fff;
             border: none;
-            padding: 10px20px;
+            padding: 10px 20px;
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
@@ -54,7 +61,8 @@
             position: fixed;
             bottom: 0;
         }
-        /* Modal styles */.modal {
+        /* Modal styles */
+        .modal {
             display: none;
             position: fixed;
             z-index: 1;
@@ -74,7 +82,7 @@
             width: 80%;
             max-width: 600px;
             border-radius: 10px;
-            box-shadow: 0010pxrgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
         .close {
             color: #aaa;
@@ -88,8 +96,34 @@
             text-decoration: none;
             cursor: pointer;
         }
-    </style></head><body><h1>Evaluación: El Estudio de las Ciencias Naturales</h1><div class="quiz-container"><div id="quiz"></div><input type="text" id="fullname" placeholder="Nombre completo" required><input type="text" id="nie" placeholder="NIE" required><button id="submit">Enviar respuestas</button></div><footer>&copy; Derechos Reservados Prof. Alberto Sanchez
-    </footer><!-- Modal --><div id="resultModal" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>Resultados de la Evaluación</h2><p id="modalName"></p><p id="modalNIE"></p><p id="modalScore"></p><div id="modalAnswers"></div></div></div><script>const quizData = [
+    </style>
+</head>
+<body>
+    <h1>Evaluación: El Estudio de las Ciencias Naturales</h1>
+    <div class="quiz-container">
+        <div id="quiz"></div>
+        <input type="text" id="fullname" placeholder="Nombre completo" required>
+        <input type="text" id="nie" placeholder="NIE" required>
+        <button id="submit">Enviar respuestas</button>
+    </div>
+    <footer>
+        &copy; Derechos Reservados Prof. Alberto Sanchez
+    </footer>
+
+    <!-- Modal -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Resultados de la Evaluación</h2>
+            <p id="modalName"></p>
+            <p id="modalNIE"></p>
+            <p id="modalScore"></p>
+            <div id="modalAnswers"></div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
             { question: "¿Qué es el método científico?", answers: [{ text: "Un enfoque sistemático para la investigación y la adquisición de conocimiento.", correct: true }, { text: "Una técnica para medir fenómenos naturales.", correct: false }, { text: "Un conjunto de leyes físicas.", correct: false }] },
             { question: "¿Cuál es el primer paso del método científico?", answers: [{ text: "Formulación de hipótesis.", correct: false }, { text: "Observación.", correct: true }, { text: "Experimentación.", correct: false }] },
             { question: "¿Qué es una hipótesis?", answers: [{ text: "Una suposición que se puede probar.", correct: true }, { text: "Una ley natural.", correct: false }, { text: "Un experimento fallido.", correct: false }] },
@@ -125,7 +159,7 @@
             { question: "¿Qué es una variable confusa?", answers: [{ text: "Una variable que puede influir en los resultados del experimento y que no ha sido controlada.", correct: true }, { text: "Una variable que se controla directamente en el experimento.", correct: false }, { text: "Una variable que no tiene relación con el experimento.", correct: false }] }
         ];
 
-        functionshuffle(array) {
+        function shuffle(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
@@ -133,7 +167,7 @@
             return array;
         }
 
-        functionloadQuiz() {
+        function loadQuiz() {
             const quizContainer = document.getElementById('quiz');
             quizContainer.innerHTML = '';
             shuffle(quizData).forEach((data, index) => {
@@ -165,7 +199,7 @@
             });
         }
 
-        functionsubmitQuiz() {
+        function submitQuiz() {
             const fullname = document.getElementById('fullname').value;
             const nie = document.getElementById('nie').value;
 
@@ -184,17 +218,19 @@
                 }
             });
 
-            score = Math.round(score * 10) / 10; // Redondear a un decimallet feedback = quizData.map((data, index) => {
+            score = Math.round(score * 10) / 10; // Redondear a un decimal
+
+            let feedback = quizData.map((data, index) => {
                 const selected = answers[index] ? answers[index].value === 'true' : null;
                 let result;
                 if (selected === null) {
                     result = "No contestada";
-                } elseif (selected === true) {
+                } else if (selected === true) {
                     result = "Correcta";
                 } else {
                     result = "Incorrecta";
                 }
-                return`<p>${index + 1}. ${result}</p>`;
+                return `<p>${index + 1}. ${result}</p>`;
             }).join("");
 
             document.getElementById('modalName').innerText = `Nombre: ${fullname}`;
@@ -208,7 +244,8 @@
 
         document.getElementById('submit').addEventListener('click', submitQuiz);
 
-        // Modal closeconst closeModal = document.querySelector('.close');
+        // Modal close
+        const closeModal = document.querySelector('.close');
         closeModal.onclick = function() {
             const modal = document.getElementById('resultModal');
             modal.style.display = 'none';
@@ -222,4 +259,6 @@
         }
 
         loadQuiz();
-    </script></body></html>
+    </script>
+</body>
+</html>
