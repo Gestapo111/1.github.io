@@ -3,248 +3,629 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluación: El Estudio de las Ciencias Naturales</title>
+    <title>Unidad 1: El estudio de las Ciencias Naturales</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h1 {
-            color: #333;
-        }
-        .quiz-container {
-            background-color: #fff;
             padding: 20px;
-            margin: 20px 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 800px;
+        }
+        h1, h2 {
+            text-align: center;
         }
         .question {
-            margin-bottom: 15px;
+            margin: 20px 0;
         }
-        .options {
-            list-style-type: none;
-            padding: 0;
-        }
-        .options li {
+        .question label {
+            font-weight: bold;
+            display: block;
             margin-bottom: 10px;
         }
-        button {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
+        .question .options {
+            margin-left: 20px;
         }
-        button:hover {
-            background-color: #218838;
+        .question .options input {
+            margin-right: 10px;
         }
-        #results {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            width: 100%;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-        }
-        /* Modal Styles */
-        .modal {
+        .popup {
             display: none;
             position: fixed;
-            z-index: 1;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
-            background-color: rgb(0,0,0);
-            background-color: rgba(0,0,0,0.4);
-            padding-top: 60px;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
         }
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
+        .popup-content {
+            background-color: #fff;
+            padding: 30px;
             border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
         }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
+        .popup-content input {
+            margin-bottom: 20px;
+            padding: 15px;
+            width: 80%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
+        .popup-content button {
+            padding: 15px 30px;
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+        }
+        button.submit-btn {
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        button.submit-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Evaluación: El Estudio de las Ciencias Naturales</h1>
-    <div class="quiz-container">
-        <div id="quiz"></div>
-        <button id="submit">Enviar respuestas</button>
-    </div>
 
-    <!-- Modal -->
-    <div id="resultModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="modalName"></p>
-            <p id="modalNIE"></p>
-            <p id="modalScore"></p>
-            <div id="modalAnswers"></div>
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h2>Complete la siguiente información</h2>
+        <input type="text" id="nombre" placeholder="Nombre Completo" required>
+        <input type="text" id="nie" placeholder="NIE" required>
+        <button onclick="validatePopup()">Continuar</button>
+    </div>
+</div>
+
+<div class="container" id="evaluation">
+    <h1>Unidad 1: El estudio de las Ciencias Naturales</h1>
+
+    <!-- Indicador 1.1 -->
+    <div class="question">
+        <label>1. Un nuevo dispositivo tecnológico reduce el consumo de energía en los hogares, pero genera residuos tóxicos. ¿Qué aspecto debe priorizarse?</label>
+        <div class="options">
+            <label><input type="radio" name="q1" value="correcto"> A. Adoptar tecnologías más limpias en su producción.</label><br>
+            <label><input type="radio" name="q1" value="incorrecto"> B. Aumentar el consumo del dispositivo.</label><br>
+            <label><input type="radio" name="q1" value="incorrecto"> C. Eliminar su producción completamente.</label><br>
+            <label><input type="radio" name="q1" value="incorrecto"> D. Mantener el proceso actual sin cambios.</label>
         </div>
     </div>
 
-    <footer>
-        &copy; Derechos Reservados Prof. Alberto Sanchez
-    </footer>
+    <div class="question">
+        <label>2. La implementación de un sistema de riego ha mejorado la agricultura, pero ha reducido los niveles de agua en un río cercano. ¿Qué debería hacerse?</label>
+        <div class="options">
+            <label><input type="radio" name="q2" value="correcto"> A. Buscar formas de reutilizar el agua para reducir el impacto.</label><br>
+            <label><input type="radio" name="q2" value="incorrecto"> B. Continuar el riego sin preocuparse por el río.</label><br>
+            <label><input type="radio" name="q2" value="incorrecto"> C. Detener toda la agricultura para salvar el río.</label><br>
+            <label><input type="radio" name="q2" value="incorrecto"> D. No hacer nada, ya que el problema no es grave.</label>
+        </div>
+    </div>
 
-    <script>
-        const quizData = [
-            { question: "¿Qué es el método científico?", answers: [{ text: "Un enfoque sistemático para la investigación y la adquisición de conocimiento.", correct: true }, { text: "Una técnica para medir fenómenos naturales.", correct: false }, { text: "Un conjunto de leyes físicas.", correct: false }] },
-            { question: "¿Cuál es el primer paso del método científico?", answers: [{ text: "Formulación de hipótesis.", correct: false }, { text: "Observación.", correct: true }, { text: "Experimentación.", correct: false }] },
-            { question: "¿Qué es una hipótesis?", answers: [{ text: "Una suposición que se puede probar.", correct: true }, { text: "Una ley natural.", correct: false }, { text: "Un experimento fallido.", correct: false }] },
-            { question: "¿Qué es una teoría científica?", answers: [{ text: "Una explicación bien fundamentada de algún aspecto del mundo natural.", correct: true }, { text: "Una suposición sin pruebas.", correct: false }, { text: "Un conjunto de datos experimentales.", correct: false }] },
-            { question: "¿Qué es un experimento controlado?", answers: [{ text: "Un experimento en el que se manipula una variable para observar sus efectos.", correct: true }, { text: "Un experimento que siempre da resultados positivos.", correct: false }, { text: "Un experimento sin variables.", correct: false }] },
-            { question: "¿Qué es una variable independiente?", answers: [{ text: "La variable que se manipula en un experimento.", correct: true }, { text: "La variable que se mide en un experimento.", correct: false }, { text: "La variable que no cambia en un experimento.", correct: false }] },
-            { question: "¿Qué es una variable dependiente?", answers: [{ text: "La variable que se mide en un experimento.", correct: true }, { text: "La variable que se manipula en un experimento.", correct: false }, { text: "La variable que no cambia en un experimento.", correct: false }] },
-            { question: "¿Qué es una ley científica?", answers: [{ text: "Una descripción de un fenómeno natural que siempre ocurre bajo ciertas condiciones.", correct: true }, { text: "Una explicación de por qué ocurre un fenómeno natural.", correct: false }, { text: "Una suposición que necesita ser probada.", correct: false }] },
-            { question: "¿Qué es una observación cualitativa?", answers: [{ text: "Una observación que describe cualidades o características sin usar números.", correct: true }, { text: "Una observación que usa números y medidas.", correct: false }, { text: "Una observación que se realiza con un microscopio.", correct: false }] },
-            { question: "¿Qué es una observación cuantitativa?", answers: [{ text: "Una observación que usa números y medidas.", correct: true }, { text: "Una observación que describe cualidades o características.", correct: false }, { text: "Una observación que se realiza sin instrumentos.", correct: false }] },
-            { question: "¿Qué es un modelo científico?", answers: [{ text: "Una representación simplificada de un fenómeno o sistema real.", correct: true }, { text: "Un experimento fallido.", correct: false }, { text: "Un instrumento de medida.", correct: false }] },
-            { question: "¿Qué es una hipótesis nula?", answers: [{ text: "Una hipótesis que propone que no hay efecto o relación entre variables.", correct: true }, { text: "Una hipótesis que siempre es cierta.", correct: false }, { text: "Una hipótesis que no se puede probar.", correct: false }] },
-            { question: "¿Qué es un experimento de doble ciego?", answers: [{ text: "Un experimento en el que ni los participantes ni los investigadores saben quién recibe el tratamiento.", correct: true }, { text: "Un experimento en el que solo los investigadores saben quién recibe el tratamiento.", correct: false }, { text: "Un experimento sin grupo control.", correct: false }] },
-            { question: "¿Qué es la replicación en la investigación científica?", answers: [{ text: "La repetición de un experimento para verificar los resultados.", correct: true }, { text: "La creación de múltiples hipótesis.", correct: false }, { text: "La publicación de los resultados.", correct: false }] },
-            { question: "¿Qué es un sesgo en la investigación científica?", answers: [{ text: "Una inclinación o preferencia que puede afectar los resultados.", correct: true }, { text: "Un tipo de error de medición.", correct: false }, { text: "Un resultado inesperado.", correct: false }] },
-            { question: "¿Qué es la revisión por pares?", answers: [{ text: "La evaluación de la investigación por otros expertos en el campo.", correct: true }, { text: "La publicación de resultados en un diario.", correct: false }, { text: "La repetición de un experimento por el mismo investigador.", correct: false }] },
-            { question: "¿Qué es un control positivo en un experimento?", answers: [{ text: "Un grupo en el que se espera un resultado positivo para comparar.", correct: true }, { text: "Un grupo sin tratamiento.", correct: false }, { text: "Un grupo en el que se espera un resultado negativo.", correct: false }] },
-            { question: "¿Qué es un control negativo en un experimento?", answers: [{ text: "Un grupo en el que no se espera ningún efecto para comparar.", correct: true }, { text: "Un grupo sin tratamiento.", correct: false }, { text: "Un grupo en el que se espera un resultado positivo.", correct: false }] },
-            { question: "¿Qué es la inferencia?", answers: [{ text: "Una conclusión basada en evidencia y razonamiento.", correct: true }, { text: "Una observación directa.", correct: false }, { text: "Una hipótesis sin pruebas.", correct: false }] },
-            { question: "¿Qué es un ensayo clínico?", answers: [{ text: "Una investigación experimental en humanos para evaluar tratamientos médicos.", correct: true }, { text: "Un estudio de observación en humanos.", correct: false }, { text: "Un experimento en animales.", correct: false }] },
-            { question: "¿Qué es una muestra representativa?", answers: [{ text: "Un subconjunto de una población que refleja las características de la población completa.", correct: true }, { text: "Un subconjunto de una población seleccionado al azar.", correct: false }, { text: "Un grupo control en un experimento.", correct: false }] },
-            { question: "¿Qué es una correlación?", answers: [{ text: "Una relación entre dos variables donde si una cambia, la otra también lo hace.", correct: true }, { text: "Una causa y efecto.", correct: false }, { text: "Una medición de exactitud.", correct: false }] },
-            { question: "¿Qué es un ensayo doble ciego?", answers: [{ text: "Un experimento en el que ni el sujeto ni el investigador saben quién recibe el tratamiento.", correct: true }, { text: "Un experimento en el que solo el investigador sabe quién recibe el tratamiento.", correct: false }, { text: "Un experimento sin grupo control.", correct: false }] },
-            { question: "¿Qué es una prueba t?", answers: [{ text: "Una prueba estadística para comparar las medias de dos grupos.", correct: true }, { text: "Una técnica de observación.", correct: false }, { text: "Un método para recolectar datos.", correct: false }] },
-            { question: "¿Qué es la falsabilidad?", answers: [{ text: "La capacidad de una hipótesis para ser probada como falsa.", correct: true }, { text: "La capacidad de una teoría para ser siempre verdadera.", correct: false }, { text: "La capacidad de un experimento para ser replicado.", correct: false }] },
-            { question: "¿Qué es el principio de parsimonia?", answers: [{ text: "El principio de que la explicación más simple es generalmente la correcta.", correct: true }, { text: "El principio de que todas las explicaciones son igualmente válidas.", correct: false }, { text: "El principio de que la explicación más compleja es la correcta.", correct: false }] },
-            { question: "¿Qué es la causalidad en la investigación científica?", answers: [{ text: "La relación en la que una variable causa un cambio en otra variable.", correct: true }, { text: "La relación en la que dos variables cambian de forma independiente.", correct: false }, { text: "La observación de una coincidencia entre dos variables.", correct: false }] },
-            { question: "¿Qué es un diseño experimental?", answers: [{ text: "Un plan detallado para realizar experimentos y recolectar datos.", correct: true }, { text: "Una descripción de los resultados de un experimento.", correct: false }, { text: "Un conjunto de hipótesis relacionadas.", correct: false }] },
-            { question: "¿Qué es una variable confusa?", answers: [{ text: "Una variable que puede afectar el resultado del experimento y no se controla.", correct: true }, { text: "Una variable que se mide en el experimento.", correct: false }, { text: "Una variable que se mantiene constante en el experimento.", correct: false }] },
-            { question: "¿Qué es el efecto placebo?", answers: [{ text: "Una mejora en la condición de un paciente debido a la expectativa de tratamiento, no al tratamiento mismo.", correct: true }, { text: "Una respuesta física al tratamiento real.", correct: false }, { text: "Una reacción adversa a un medicamento.", correct: false }] },
-            { question: "¿Qué es la desviación estándar?", answers: [{ text: "Una medida de la dispersión de los datos alrededor de la media.", correct: true }, { text: "Una medida de la media de los datos.", correct: false }, { text: "Una medida de la correlación entre variables.", correct: false }] },
-            { question: "¿Qué es la validez interna en un experimento?", answers: [{ text: "El grado en que el experimento mide lo que pretende medir sin influencia de variables externas.", correct: true }, { text: "El grado en que los resultados son aplicables a la población general.", correct: false }, { text: "El grado en que los resultados son repetibles en diferentes experimentos.", correct: false }] },
-            { question: "¿Qué es una hipótesis alternativa?", answers: [{ text: "Una hipótesis que plantea un efecto o relación entre variables como opuesto a la hipótesis nula.", correct: true }, { text: "Una hipótesis que no puede ser probada.", correct: false }, { text: "Una hipótesis que siempre es cierta.", correct: false }] },
-            { question: "¿Qué es un diseño de estudio transversal?", answers: [{ text: "Un estudio que observa a una población en un solo punto en el tiempo.", correct: true }, { text: "Un estudio que sigue a una población a lo largo del tiempo.", correct: false }, { text: "Un estudio que compara dos grupos de diferentes edades.", correct: false }] },
-            { question: "¿Qué es un sesgo de selección?", answers: [{ text: "Un sesgo que ocurre cuando los participantes del estudio no son representativos de la población general.", correct: true }, { text: "Un sesgo que ocurre cuando se elige una muestra al azar.", correct: false }, { text: "Un sesgo que ocurre cuando se realizan múltiples pruebas estadísticas.", correct: false }] },
-            { question: "¿Qué es la teoría de la evolución por selección natural?", answers: [{ text: "La teoría que propone que los organismos evolucionan a través de la selección de características favorables.", correct: true }, { text: "La teoría que propone que los organismos evolucionan por cambios aleatorios.", correct: false }, { text: "La teoría que propone que los organismos no evolucionan.", correct: false }] },
-            { question: "¿Qué es el equilibrio dinámico en un ecosistema?", answers: [{ text: "El estado en el que las poblaciones de especies en un ecosistema tienden a estabilizarse en un rango de variabilidad.", correct: true }, { text: "El estado en el que las especies en un ecosistema están en constante cambio.", correct: false }, { text: "El estado en el que un ecosistema permanece sin cambios.", correct: false }] },
-            { question: "¿Qué es la retroalimentación positiva en un sistema biológico?", answers: [{ text: "Un proceso que amplifica los cambios en el sistema y puede llevar a un estado de desequilibrio.", correct: true }, { text: "Un proceso que mantiene el equilibrio en el sistema.", correct: false }, { text: "Un proceso que disminuye los cambios en el sistema.", correct: false }] },
-            { question: "¿Qué es la biodiversidad y por qué es importante?", answers: [{ text: "La variedad de vida en un ecosistema; es importante porque aumenta la resiliencia y estabilidad del ecosistema.", correct: true }, { text: "La cantidad de especies en un ecosistema; es importante para la producción de alimentos.", correct: false }, { text: "La variabilidad genética en una especie; es importante para la salud de los individuos.", correct: false }] },
-            { question: "¿Qué es la transferencia de energía en una cadena trófica?", answers: [{ text: "El proceso mediante el cual la energía se transfiere de un organismo a otro a través de niveles tróficos.", correct: true }, { text: "El proceso mediante el cual la energía se conserva en un organismo.", correct: false }, { text: "El proceso mediante el cual la energía se pierde en el ambiente.", correct: false }] },
-            { question: "¿Qué es la homeostasis en organismos vivos?", answers: [{ text: "La capacidad de un organismo para mantener un ambiente interno estable a pesar de los cambios externos.", correct: true }, { text: "La capacidad de un organismo para crecer y reproducirse.", correct: false }, { text: "La capacidad de un organismo para responder a estímulos.", correct: false }] },
-            { question: "¿Qué es la teoría de los juegos en biología evolutiva?", answers: [{ text: "Un modelo que analiza estrategias competitivas y cooperativas entre organismos.", correct: true }, { text: "Un modelo que estudia el comportamiento individual de organismos.", correct: false }, { text: "Un modelo que estudia la evolución de una sola especie.", correct: false }] },
-            { question: "¿Qué es el ADN y su función en la biología?", answers: [{ text: "El ADN es el material genético que contiene la información para el desarrollo y funcionamiento de los organismos.", correct: true }, { text: "El ADN es una molécula que se encuentra en el citoplasma de las células.", correct: false }, { text: "El ADN es una proteína que realiza funciones metabólicas.", correct: false }] },
-            { question: "¿Qué es la fotosíntesis y su importancia para los ecosistemas?", answers: [{ text: "Es el proceso mediante el cual las plantas convierten la luz solar en energía química; es crucial porque produce oxígeno y alimentos.", correct: true }, { text: "Es el proceso mediante el cual las plantas convierten el dióxido de carbono en oxígeno; es importante para la respiración de los animales.", correct: false }, { text: "Es el proceso mediante el cual las plantas absorben agua; es importante para el crecimiento de las plantas.", correct: false }] },
-            { question: "¿Qué es el ciclo del nitrógeno en un ecosistema?", answers: [{ text: "Es el ciclo biogeoquímico que describe el movimiento del nitrógeno a través de la atmósfera, el suelo y los organismos vivos.", correct: true }, { text: "Es el ciclo que describe el movimiento del carbono a través de los ecosistemas.", correct: false }, { text: "Es el ciclo que describe la absorción de nutrientes por las plantas.", correct: false }] },
-            { question: "¿Qué es la teoría de la endosimbiosis?", answers: [{ text: "La teoría que propone que las células eucariotas se originaron a partir de simbiosis entre células procariotas.", correct: true }, { text: "La teoría que sugiere que las células procariotas evolucionaron de las eucariotas.", correct: false }, { text: "La teoría que explica la evolución de las plantas a partir de los animales.", correct: false }] },
-            { question: "¿Qué es la genética y cómo influye en la herencia de los rasgos?", answers: [{ text: "La genética es el estudio de la herencia y la variación en los organismos; influye en la transmisión de rasgos de padres a hijos.", correct: true }, { text: "La genética es el estudio de las enfermedades; influye en la salud de los individuos.", correct: false }, { text: "La genética es el estudio de la evolución; influye en la adaptación de las especies.", correct: false }] },
-            { question: "¿Qué es un ecosistema y qué componentes lo forman?", answers: [{ text: "Un ecosistema es una comunidad de organismos que interactúan entre sí y con su ambiente; está formado por bioticos y abióticos.", correct: true }, { text: "Un ecosistema es una serie de organismos que viven en una zona; está formado solo por organismos vivos.", correct: false }, { text: "Un ecosistema es un grupo de especies que compiten por recursos; está formado solo por recursos naturales.", correct: false }] },
-            { question: "¿Qué es la evolución y cuáles son sus mecanismos principales?", answers: [{ text: "La evolución es el cambio en las características hereditarias de una población a lo largo del tiempo; sus mecanismos incluyen la selección natural, la mutación y la deriva genética.", correct: true }, { text: "La evolución es el desarrollo de nuevas especies; sus mecanismos incluyen la adaptación y la competencia.", correct: false }, { text: "La evolución es la adaptación a cambios ambientales; sus mecanismos incluyen el aprendizaje y la migración.", correct: false }] },
-            { question: "¿Qué es la simbiosis y qué tipos existen?", answers: [{ text: "La simbiosis es una interacción entre dos organismos de diferentes especies; los tipos incluyen mutualismo, comensalismo y parasitismo.", correct: true }, { text: "La simbiosis es una interacción entre organismos de la misma especie; los tipos incluyen cooperación y competencia.", correct: false }, { text: "La simbiosis es una relación entre organismos y su ambiente; los tipos incluyen adaptación y competencia.", correct: false }] },
-            { question: "¿Qué es la adaptación en biología?", answers: [{ text: "La adaptación es un cambio en los organismos que mejora su capacidad para sobrevivir y reproducirse en un entorno específico.", correct: true }, { text: "La adaptación es una respuesta temporal a condiciones ambientales.", correct: false }, { text: "La adaptación es una técnica de laboratorio para estudiar organismos.", correct: false }] },
-            { question: "¿Qué es la biotecnología y cómo se aplica en la ciencia?", answers: [{ text: "La biotecnología es el uso de organismos vivos o sus productos para desarrollar tecnologías y aplicaciones; se aplica en áreas como la medicina, la agricultura y la industria.", correct: true }, { text: "La biotecnología es el estudio de la estructura de los organismos vivos; se aplica en la clasificación de especies.", correct: false }, { text: "La biotecnología es la ingeniería de sistemas biológicos; se aplica en la producción de energía renovable.", correct: false }] },
-            { question: "¿Qué es el ADN y cómo se replica?", answers: [{ text: "El ADN es el material genético que contiene instrucciones para el desarrollo de organismos; se replica mediante la separación de sus cadenas y la síntesis de nuevas cadenas complementarias.", correct: true }, { text: "El ADN es una proteína que controla las funciones celulares; se replica mediante la división celular.", correct: false }, { text: "El ADN es una molécula de energía; se replica mediante la transferencia de energía entre células.", correct: false }] }
-        ];
+    <div class="question">
+        <label>3. Un país quiere desarrollar una industria minera que generará empleos, pero también podría dañar un bosque protegido. ¿Qué debe considerarse?</label>
+        <div class="options">
+            <label><input type="radio" name="q3" value="correcto"> A. Equilibrar la creación de empleos con la protección ambiental.</label><br>
+            <label><input type="radio" name="q3" value="incorrecto"> B. Destruir el bosque si beneficia a la economía.</label><br>
+            <label><input type="radio" name="q3" value="incorrecto"> C. No preocuparse por el impacto en el bosque.</label><br>
+            <label><input type="radio" name="q3" value="incorrecto"> D. Solo centrarse en el crecimiento económico.</label>
+        </div>
+    </div>
 
-        const quizContainer = document.getElementById('quiz');
-        const submitButton = document.getElementById('submit');
-        const resultModal = document.getElementById('resultModal');
-        const closeModal = document.querySelector('.close');
-        const modalName = document.getElementById('modalName');
-        const modalNIE = document.getElementById('modalNIE');
-        const modalScore = document.getElementById('modalScore');
-        const modalAnswers = document.getElementById('modalAnswers');
+    <!-- Indicador 1.2 -->
+    <div class="question">
+        <label>4. María está investigando las propiedades de un material. ¿Cuál refleja mejor la naturaleza de la actividad científica?</label>
+        <div class="options">
+            <label><input type="radio" name="q4" value="incorrecto"> A. María sigue sus intuiciones sin datos.</label><br>
+            <label><input type="radio" name="q4" value="correcto"> B. María realiza experimentos y analiza los resultados.</label><br>
+            <label><input type="radio" name="q4" value="incorrecto"> C. María depende únicamente de libros antiguos.</label><br>
+            <label><input type="radio" name="q4" value="incorrecto"> D. María decide los resultados antes de experimentar.</label>
+        </div>
+    </div>
 
-        function generateQuiz() {
-            let html = '';
-            quizData.forEach((questionData, index) => {
-                html += `<div class="question">
-                    <h2>Pregunta ${index + 1}: ${questionData.question}</h2>
-                    <ul class="options">
-                        ${questionData.answers.map((answer, i) => `
-                            <li>
-                                <input type="radio" name="q${index}" id="q${index}a${i}" value="${i}">
-                                <label for="q${index}a${i}">${answer.text}</label>
-                            </li>
-                        `).join('')}
-                    </ul>
-                </div>`;
-            });
-            quizContainer.innerHTML = html;
+    <div class="question">
+        <label>5. Un científico se enfrenta a la presión de publicar resultados rápidos. ¿Qué debe priorizar?</label>
+        <div class="options">
+            <label><input type="radio" name="q5" value="incorrecto"> A. La rapidez en la publicación.</label><br>
+            <label><input type="radio" name="q5" value="correcto"> B. La ética y rigor científico.</label><br>
+            <label><input type="radio" name="q5" value="incorrecto"> C. La popularidad de sus descubrimientos.</label><br>
+            <label><input type="radio" name="q5" value="incorrecto"> D. La opinión pública.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>6. Un investigador descubre datos que no coinciden con su hipótesis original. ¿Qué debe hacer?</label>
+        <div class="options">
+            <label><input type="radio" name="q6" value="correcto"> A. Revisar y modificar su hipótesis en base a los nuevos datos.</label><br>
+            <label><input type="radio" name="q6" value="incorrecto"> B. Ignorar los datos y seguir con su hipótesis original.</label><br>
+            <label><input type="radio" name="q6" value="incorrecto"> C. Modificar los datos para que coincidan con la hipótesis.</label><br>
+            <label><input type="radio" name="q6" value="incorrecto"> D. Abandonar la investigación por completo.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.3 -->
+    <div class="question">
+        <label>7. Un científico desea comunicar los resultados de su investigación. ¿Qué método es más efectivo?</label>
+        <div class="options">
+            <label><input type="radio" name="q7" value="correcto"> A. Publicar un artículo en una revista de divulgación científica.</label><br>
+            <label><input type="radio" name="q7" value="incorrecto"> B. Mantener los resultados en su cuaderno de laboratorio.</label><br>
+            <label><input type="radio" name="q7" value="incorrecto"> C. Escribir los resultados en un lenguaje muy técnico.</label><br>
+            <label><input type="radio" name="q7" value="incorrecto"> D. Compartir los resultados solo con otros científicos.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>8. Un investigador presenta sus hallazgos a la comunidad, pero usa un lenguaje muy técnico. ¿Qué podría hacer para mejorar la comunicación?</label>
+        <div class="options">
+            <label><input type="radio" name="q8" value="correcto"> A. Adaptar su presentación a un lenguaje más accesible.</label><br>
+            <label><input type="radio" name="q8" value="incorrecto"> B. Mantener el lenguaje técnico para demostrar conocimiento.</label><br>
+            <label><input type="radio" name="q8" value="incorrecto"> C. Solo presentar los datos más complejos.</label><br>
+            <label><input type="radio" name="q8" value="incorrecto"> D. Enfocarse únicamente en los aspectos teóricos.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>9. Un equipo de investigación publica un artículo científico, pero recibe críticas por la falta de claridad. ¿Qué debieron haber hecho antes de publicar?</label>
+        <div class="options">
+            <label><input type="radio" name="q9" value="correcto"> A. Revisar el lenguaje para asegurarse de que sea comprensible para un público más amplio.</label><br>
+            <label><input type="radio" name="q9" value="incorrecto"> B. Ignorar la necesidad de claridad y enfocarse en la precisión técnica.</label><br>
+            <label><input type="radio" name="q9" value="incorrecto"> C. Evitar la publicación hasta estar seguros de que solo los expertos entiendan.</label><br>
+            <label><input type="radio" name="q9" value="incorrecto"> D. Publicar sin revisiones adicionales.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.4 -->
+    <div class="question">
+        <label>10. Durante un experimento, un estudiante mide la masa y el volumen de un objeto. ¿Qué magnitudes está utilizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q10" value="incorrecto"> A. Tiempo y longitud.</label><br>
+            <label><input type="radio" name="q10" value="correcto"> B. Masa y volumen.</label><br>
+            <label><input type="radio" name="q10" value="incorrecto"> C. Temperatura y presión.</label><br>
+            <label><input type="radio" name="q10" value="incorrecto"> D. Fuerza y aceleración.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>11. Un estudiante quiere medir la cantidad de agua en un recipiente. ¿Qué magnitud física debe usar?</label>
+        <div class="options">
+            <label><input type="radio" name="q11" value="correcto"> A. Volumen.</label><br>
+            <label><input type="radio" name="q11" value="incorrecto"> B. Masa.</label><br>
+            <label><input type="radio" name="q11" value="incorrecto"> C. Longitud.</label><br>
+            <label><input type="radio" name="q11" value="incorrecto"> D. Temperatura.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>12. Al medir la distancia entre dos puntos con una cinta métrica, ¿qué tipo de magnitud física está utilizando el estudiante?</label>
+        <div class="options">
+            <label><input type="radio" name="q12" value="correcto"> A. Longitud.</label><br>
+            <label><input type="radio" name="q12" value="incorrecto"> B. Masa.</label><br>
+            <label><input type="radio" name="q12" value="incorrecto"> C. Tiempo.</label><br>
+            <label><input type="radio" name="q12" value="incorrecto"> D. Temperatura.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.5 -->
+    <div class="question">
+        <label>13. Un físico mide la velocidad de un coche en movimiento. ¿Qué tipo de magnitud está analizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q13" value="incorrecto"> A. Escalar.</label><br>
+            <label><input type="radio" name="q13" value="correcto"> B. Vectorial.</label><br>
+            <label><input type="radio" name="q13" value="incorrecto"> C. Derivada.</label><br>
+            <label><input type="radio" name="q13" value="incorrecto"> D. Fundamental.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>14. Un estudiante está determinando la fuerza que actúa sobre un objeto y necesita representar tanto la magnitud como la dirección. ¿Qué tipo de magnitud debe utilizar?</label>
+        <div class="options">
+            <label><input type="radio" name="q14" value="correcto"> A. Vectorial.</label><br>
+            <label><input type="radio" name="q14" value="incorrecto"> B. Escalar.</label><br>
+            <label><input type="radio" name="q14" value="incorrecto"> C. Derivada.</label><br>
+            <label><input type="radio" name="q14" value="incorrecto"> D. Fundamental.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>15. Un estudiante mide la temperatura de un objeto. ¿Qué tipo de magnitud está utilizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q15" value="correcto"> A. Escalar.</label><br>
+            <label><input type="radio" name="q15" value="incorrecto"> B. Vectorial.</label><br>
+            <label><input type="radio" name="q15" value="incorrecto"> C. Derivada.</label><br>
+            <label><input type="radio" name="q15" value="incorrecto"> D. Fundamental.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.6 -->
+    <div class="question">
+        <label>16. Durante una clase, un profesor enseña cómo descomponer un vector en sus componentes. ¿Qué concepto están utilizando los estudiantes?</label>
+        <div class="options">
+            <label><input type="radio" name="q16" value="correcto"> A. Vectores unitarios.</label><br>
+            <label><input type="radio" name="q16" value="incorrecto"> B. Velocidad escalar.</label><br>
+            <label><input type="radio" name="q16" value="incorrecto"> C. Masa y peso.</label><br>
+            <label><input type="radio" name="q16" value="incorrecto"> D. Longitud de onda.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>17. Un estudiante descompone una fuerza en sus componentes horizontal y vertical. ¿Qué está usando?</label>
+        <div class="options">
+            <label><input type="radio" name="q17" value="correcto"> A. Vectores unitarios.</label><br>
+            <label><input type="radio" name="q17" value="incorrecto"> B. Magnitudes escalares.</label><br>
+            <label><input type="radio" name="q17" value="incorrecto"> C. Velocidades escalares.</label><br>
+            <label><input type="radio" name="q17" value="incorrecto"> D. Magnitudes derivadas.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>18. Un grupo de estudiantes suma las componentes de varios vectores para encontrar la fuerza total. ¿Qué principio están aplicando?</label>
+        <div class="options">
+            <label><input type="radio" name="q18" value="correcto"> A. Suma de vectores mediante componentes.</label><br>
+            <label><input type="radio" name="q18" value="incorrecto"> B. Suma de magnitudes escalares.</label><br>
+            <label><input type="radio" name="q18" value="incorrecto"> C. Producto de vectores.</label><br>
+            <label><input type="radio" name="q18" value="incorrecto"> D. Resta de magnitudes derivadas.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.7 -->
+    <div class="question">
+        <label>19. Un estudiante necesita calcular la fuerza resultante de dos vectores que actúan sobre un objeto. ¿Qué método debería utilizar?</label>
+        <div class="options">
+            <label><input type="radio" name="q19" value="correcto"> A. Método gráfico o analítico.</label><br>
+            <label><input type="radio" name="q19" value="incorrecto"> B. Solo sumar los valores numéricos sin dirección.</label><br>
+            <label><input type="radio" name="q19" value="incorrecto"> C. Multiplicar los vectores entre sí.</label><br>
+            <label><input type="radio" name="q19" value="incorrecto"> D. Restar las magnitudes sin considerar la dirección.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>20. Un estudiante necesita restar dos vectores que están en la misma dirección. ¿Qué técnica debería usar?</label>
+        <div class="options">
+            <label><input type="radio" name="q20" value="correcto"> A. Método analítico o gráfico considerando la dirección.</label><br>
+            <label><input type="radio" name="q20" value="incorrecto"> B. Restar directamente sus magnitudes sin considerar la dirección.</label><br>
+            <label><input type="radio" name="q20" value="incorrecto"> C. Multiplicar los vectores entre sí.</label><br>
+            <label><input type="radio" name="q20" value="incorrecto"> D. Sumar los valores absolutos de las magnitudes.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>21. En un experimento, un estudiante usa la ley del paralelogramo para sumar dos vectores que forman un ángulo. ¿Qué está buscando?</label>
+        <div class="options">
+            <label><input type="radio" name="q21" value="correcto"> A. La fuerza resultante.</label><br>
+            <label><input type="radio" name="q21" value="incorrecto"> B. La fuerza normal.</label><br>
+            <label><input type="radio" name="q21" value="incorrecto"> C. La fuerza de fricción.</label><br>
+            <label><input type="radio" name="q21" value="incorrecto"> D. La energía cinética.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.8 -->
+    <div class="question">
+        <label>22. En un laboratorio, los estudiantes observan cómo dos superficies diferentes generan fricción al moverse una sobre la otra. ¿Qué fenómeno están explorando?</label>
+        <div class="options">
+            <label><input type="radio" name="q22" value="incorrecto"> A. Fuerza gravitacional.</label><br>
+            <label><input type="radio" name="q22" value="correcto"> B. Fuerza de fricción.</label><br>
+            <label><input type="radio" name="q22" value="incorrecto"> C. Tensión superficial.</label><br>
+            <label><input type="radio" name="q22" value="incorrecto"> D. Energía cinética.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>23. Un grupo de estudiantes experimenta con diferentes materiales y observa cómo la fricción varía entre ellos. ¿Qué propiedad física están investigando?</label>
+        <div class="options">
+            <label><input type="radio" name="q23" value="correcto"> A. Coeficiente de fricción.</label><br>
+            <label><input type="radio" name="q23" value="incorrecto"> B. Densidad.</label><br>
+            <label><input type="radio" name="q23" value="incorrecto"> C. Resistencia eléctrica.</label><br>
+            <label><input type="radio" name="q23" value="incorrecto"> D. Capacidad térmica.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>24. En un experimento, los estudiantes colocan diferentes pesos sobre una superficie rugosa y miden la fuerza necesaria para moverlos. ¿Qué concepto están aplicando?</label>
+        <div class="options">
+            <label><input type="radio" name="q24" value="correcto"> A. Fuerza de fricción.</label><br>
+            <label><input type="radio" name="q24" value="incorrecto"> B. Tensión.</label><br>
+            <label><input type="radio" name="q24" value="incorrecto"> C. Elasticidad.</label><br>
+            <label><input type="radio" name="q24" value="incorrecto"> D. Velocidad.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.9 -->
+    <div class="question">
+        <label>25. Un grupo de estudiantes calcula la fuerza neta que actúa sobre un objeto al aplicar múltiples fuerzas en diferentes direcciones. ¿Qué están determinando?</label>
+        <div class="options">
+            <label><input type="radio" name="q25" value="incorrecto"> A. La masa del objeto.</label><br>
+            <label><input type="radio" name="q25" value="incorrecto"> B. La velocidad del objeto.</label><br>
+            <label><input type="radio" name="q25" value="correcto"> C. La fuerza resultante.</label><br>
+            <label><input type="radio" name="q25" value="incorrecto"> D. La energía potencial.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>26. En un experimento, los estudiantes aplican fuerzas opuestas sobre un objeto. ¿Qué están tratando de encontrar?</label>
+        <div class="options">
+            <label><input type="radio" name="q26" value="correcto"> A. La fuerza neta.</label><br>
+            <label><input type="radio" name="q26" value="incorrecto"> B. La aceleración máxima.</label><br>
+            <label><input type="radio" name="q26" value="incorrecto"> C. La energía potencial.</label><br>
+            <label><input type="radio" name="q26" value="incorrecto"> D. La presión.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>27. Un estudiante coloca un objeto en un plano inclinado y mide la fuerza necesaria para moverlo. ¿Qué fuerza está intentando calcular?</label>
+        <div class="options">
+            <label><input type="radio" name="q27" value="correcto"> A. Fuerza de fricción.</label><br>
+            <label><input type="radio" name="q27" value="incorrecto"> B. Fuerza centrífuga.</label><br>
+            <label><input type="radio" name="q27" value="incorrecto"> C. Fuerza centrípeta.</label><br>
+            <label><input type="radio" name="q27" value="incorrecto"> D. Energía cinética.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.10 -->
+    <div class="question">
+        <label>28. Un estudiante está midiendo la longitud, masa y tiempo en un experimento. ¿Qué tipo de unidades está utilizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q28" value="correcto"> A. Unidades fundamentales del SI.</label><br>
+            <label><input type="radio" name="q28" value="incorrecto"> B. Unidades derivadas del SI.</label><br>
+            <label><input type="radio" name="q28" value="incorrecto"> C. Unidades anglosajonas.</label><br>
+            <label><input type="radio" name="q28" value="incorrecto"> D. Unidades absolutas.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>29. Un experimento requiere medir la temperatura, la masa y la longitud de varios objetos. ¿Qué unidades están utilizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q29" value="correcto"> A. Grados Celsius, kilogramos y metros.</label><br>
+            <label><input type="radio" name="q29" value="incorrecto"> B. Gramos, litros y segundos.</label><br>
+            <label><input type="radio" name="q29" value="incorrecto"> C. Unidades anglosajonas.</label><br>
+            <label><input type="radio" name="q29" value="incorrecto"> D. Pulgadas, libras y grados Fahrenheit.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>30. Durante un experimento, un estudiante mide la cantidad de tiempo que tarda un objeto en caer desde cierta altura. ¿Qué unidad debería usar para el tiempo?</label>
+        <div class="options">
+            <label><input type="radio" name="q30" value="correcto"> A. Segundos (s).</label><br>
+            <label><input type="radio" name="q30" value="incorrecto"> B. Metros (m).</label><br>
+            <label><input type="radio" name="q30" value="incorrecto"> C. Kilogramos (kg).</label><br>
+            <label><input type="radio" name="q30" value="incorrecto"> D. Litros (L).</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.11 -->
+    <div class="question">
+        <label>31. Un experimento requiere convertir metros a centímetros. ¿Qué tipo de análisis está realizando el estudiante?</label>
+        <div class="options">
+            <label><input type="radio" name="q31" value="correcto"> A. Análisis dimensional.</label><br>
+            <label><input type="radio" name="q31" value="incorrecto"> B. Análisis vectorial.</label><br>
+            <label><input type="radio" name="q31" value="incorrecto"> C. Análisis escalar.</label><br>
+            <label><input type="radio" name="q31" value="incorrecto"> D. Análisis diferencial.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>32. Un estudiante necesita convertir horas a segundos para resolver un problema de física. ¿Qué tipo de conversión está realizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q32" value="correcto"> A. Conversión de unidades de tiempo.</label><br>
+            <label><input type="radio" name="q32" value="incorrecto"> B. Conversión de unidades de longitud.</label><br>
+            <label><input type="radio" name="q32" value="incorrecto"> C. Conversión de unidades de masa.</label><br>
+            <label><input type="radio" name="q32" value="incorrecto"> D. Conversión de unidades de temperatura.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>33. Un profesor pide a sus estudiantes que conviertan 5 km a metros. ¿Qué deben aplicar?</label>
+        <div class="options">
+            <label><input type="radio" name="q33" value="correcto"> A. Factor de conversión de unidades.</label><br>
+            <label><input type="radio" name="q33" value="incorrecto"> B. Factor de escala.</label><br>
+            <label><input type="radio" name="q33" value="incorrecto"> C. Cálculo diferencial.</label><br>
+            <label><input type="radio" name="q33" value="incorrecto"> D. Suma vectorial.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.12 -->
+    <div class="question">
+        <label>34. Un estudiante mide la temperatura con un termómetro y nota una fluctuación en la lectura. ¿Qué tipo de error podría estar observando?</label>
+        <div class="options">
+            <label><input type="radio" name="q34" value="incorrecto"> A. Error conceptual.</label><br>
+            <label><input type="radio" name="q34" value="correcto"> B. Error instrumental.</label><br>
+            <label><input type="radio" name="q34" value="incorrecto"> C. Error de cálculo.</label><br>
+            <label><input type="radio" name="q34" value="incorrecto"> D. Error estadístico.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>35. Durante un experimento, un estudiante nota que su medición es diferente cada vez que realiza el mismo procedimiento. ¿Qué tipo de error podría estar ocurriendo?</label>
+        <div class="options">
+            <label><input type="radio" name="q35" value="correcto"> A. Error personal.</label><br>
+            <label><input type="radio" name="q35" value="incorrecto"> B. Error sistemático.</label><br>
+            <label><input type="radio" name="q35" value="incorrecto"> C. Error absoluto.</label><br>
+            <label><input type="radio" name="q35" value="incorrecto"> D. Error proporcional.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>36. Un estudiante utiliza una balanza para medir la masa de un objeto, pero no ajusta la balanza correctamente antes de empezar. ¿Qué tipo de error puede estar cometiendo?</label>
+        <div class="options">
+            <label><input type="radio" name="q36" value="correcto"> A. Error instrumental.</label><br>
+            <label><input type="radio" name="q36" value="incorrecto"> B. Error de redondeo.</label><br>
+            <label><input type="radio" name="q36" value="incorrecto"> C. Error absoluto.</label><br>
+            <label><input type="radio" name="q36" value="incorrecto"> D. Error de paralaje.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.13 -->
+    <div class="question">
+        <label>37. Al realizar una medición, un estudiante obtiene un valor de 10.0 ± 0.1 cm. ¿Qué tipo de incerteza está representando el ± 0.1 cm?</label>
+        <div class="options">
+            <label><input type="radio" name="q37" value="correcto"> A. Incerteza absoluta.</label><br>
+            <label><input type="radio" name="q37" value="incorrecto"> B. Incerteza relativa.</label><br>
+            <label><input type="radio" name="q37" value="incorrecto"> C. Error sistemático.</label><br>
+            <label><input type="radio" name="q37" value="incorrecto"> D. Error aleatorio.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>38. Un estudiante mide una longitud de 50.0 cm con una incerteza de ± 0.2 cm. ¿Qué está representando el ± 0.2 cm?</label>
+        <div class="options">
+            <label><input type="radio" name="q38" value="correcto"> A. Incerteza absoluta.</label><br>
+            <label><input type="radio" name="q38" value="incorrecto"> B. Incerteza relativa.</label><br>
+            <label><input type="radio" name="q38" value="incorrecto"> C. Error sistemático.</label><br>
+            <label><input type="radio" name="q38" value="incorrecto"> D. Error proporcional.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>39. Un estudiante calcula que su incerteza relativa es del 2% en una medición. ¿Qué le está indicando este valor?</label>
+        <div class="options">
+            <label><input type="radio" name="q39" value="correcto"> A. La precisión relativa de su medición.</label><br>
+            <label><input type="radio" name="q39" value="incorrecto"> B. El error absoluto de su medición.</label><br>
+            <label><input type="radio" name="q39" value="incorrecto"> C. La incerteza sistemática.</label><br>
+            <label><input type="radio" name="q39" value="incorrecto"> D. La desviación estándar.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.14 -->
+    <div class="question">
+        <label>40. Un estudiante calcula la incerteza relativa de una medición y la compara con la incerteza absoluta. ¿Qué le está permitiendo entender este cálculo?</label>
+        <div class="options">
+            <label><input type="radio" name="q40" value="correcto"> A. La precisión de su medición.</label><br>
+            <label><input type="radio" name="q40" value="incorrecto"> B. La velocidad de su reacción.</label><br>
+            <label><input type="radio" name="q40" value="incorrecto"> C. La magnitud de la fuerza.</label><br>
+            <label><input type="radio" name="q40" value="incorrecto"> D. El cambio en la temperatura.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>41. Un estudiante mide varias veces la masa de un objeto y calcula la desviación estándar. ¿Qué está evaluando?</label>
+        <div class="options">
+            <label><input type="radio" name="q41" value="correcto"> A. La incerteza de la medición.</label><br>
+            <label><input type="radio" name="q41" value="incorrecto"> B. El error sistemático.</label><br>
+            <label><input type="radio" name="q41" value="incorrecto"> C. La incerteza relativa.</label><br>
+            <label><input type="radio" name="q41" value="incorrecto"> D. La incerteza instrumental.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>42. Durante un experimento, un estudiante calcula la incerteza total sumando la incerteza de varios componentes. ¿Qué está analizando?</label>
+        <div class="options">
+            <label><input type="radio" name="q42" value="correcto"> A. La incerteza combinada del sistema.</label><br>
+            <label><input type="radio" name="q42" value="incorrecto"> B. El error personal.</label><br>
+            <label><input type="radio" name="q42" value="incorrecto"> C. El error absoluto.</label><br>
+            <label><input type="radio" name="q42" value="incorrecto"> D. La incerteza relativa.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.15 -->
+    <div class="question">
+        <label>43. En un experimento, la relación entre la distancia recorrida y el tiempo se representa como una línea recta. ¿Qué tipo de proporcionalidad están observando?</label>
+        <div class="options">
+            <label><input type="radio" name="q43" value="correcto"> A. Proporcionalidad directa.</label><br>
+            <label><input type="radio" name="q43" value="incorrecto"> B. Proporcionalidad inversa.</label><br>
+            <label><input type="radio" name="q43" value="incorrecto"> C. Proporcionalidad cuadrática.</label><br>
+            <label><input type="radio" name="q43" value="incorrecto"> D. Proporcionalidad exponencial.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>44. Un estudiante observa que al duplicar la fuerza aplicada a un resorte, su elongación también se duplica. ¿Qué tipo de relación existe entre la fuerza y la elongación?</label>
+        <div class="options">
+            <label><input type="radio" name="q44" value="correcto"> A. Proporcionalidad directa.</label><br>
+            <label><input type="radio" name="q44" value="incorrecto"> B. Proporcionalidad inversa.</label><br>
+            <label><input type="radio" name="q44" value="incorrecto"> C. Proporcionalidad cuadrática.</label><br>
+            <label><input type="radio" name="q44" value="incorrecto"> D. Proporcionalidad exponencial.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>45. En un experimento, al aumentar la temperatura de un gas, su volumen también aumenta. ¿Qué tipo de relación están observando?</label>
+        <div class="options">
+            <label><input type="radio" name="q45" value="correcto"> A. Proporcionalidad directa.</label><br>
+            <label><input type="radio" name="q45" value="incorrecto"> B. Proporcionalidad inversa.</label><br>
+            <label><input type="radio" name="q45" value="incorrecto"> C. Proporcionalidad cuadrática.</label><br>
+            <label><input type="radio" name="q45" value="incorrecto"> D. Proporcionalidad exponencial.</label>
+        </div>
+    </div>
+
+    <!-- Indicador 1.16 -->
+    <div class="question">
+        <label>46. Un gráfico muestra la velocidad de un objeto en función del tiempo. ¿Qué tipo de relación está analizando el estudiante?</label>
+        <div class="options">
+            <label><input type="radio" name="q46" value="correcto"> A. Relación entre velocidad y tiempo.</label><br>
+            <label><input type="radio" name="q46" value="incorrecto"> B. Relación entre distancia y tiempo.</label><br>
+            <label><input type="radio" name="q46" value="incorrecto"> C. Relación entre aceleración y fuerza.</label><br>
+            <label><input type="radio" name="q46" value="incorrecto"> D. Relación entre energía y trabajo.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>47. Un estudiante analiza cómo cambia la aceleración de un objeto en función del tiempo mientras se aplica una fuerza constante. ¿Qué gráfico debe construir?</label>
+        <div class="options">
+            <label><input type="radio" name="q47" value="correcto"> A. Gráfico de aceleración vs. tiempo.</label><br>
+            <label><input type="radio" name="q47" value="incorrecto"> B. Gráfico de velocidad vs. tiempo.</label><br>
+            <label><input type="radio" name="q47" value="incorrecto"> C. Gráfico de distancia vs. tiempo.</label><br>
+            <label><input type="radio" name="q47" value="incorrecto"> D. Gráfico de energía vs. trabajo.</label>
+        </div>
+    </div>
+
+    <div class="question">
+        <label>48. Un experimento muestra que al duplicar la distancia recorrida por un objeto en movimiento, su tiempo de recorrido también se duplica. ¿Qué tipo de proporcionalidad refleja este resultado?</label>
+        <div class="options">
+            <label><input type="radio" name="q48" value="correcto"> A. Proporcionalidad directa entre distancia y tiempo.</label><br>
+            <label><input type="radio" name="q48" value="incorrecto"> B. Proporcionalidad inversa entre distancia y tiempo.</label><br>
+            <label><input type="radio" name="q48" value="incorrecto"> C. Relación cuadrática entre distancia y tiempo.</label><br>
+            <label><input type="radio" name="q48" value="incorrecto"> D. Relación exponencial entre distancia y tiempo.</label>
+        </div>
+    </div>
+
+    <button class="submit-btn" onclick="calculateGrade()">Obtener Nota</button>
+</div>
+
+<script>
+    window.onload = function() {
+        document.getElementById('popup').style.display = 'flex';
+    };
+
+    function validatePopup() {
+        var nombre = document.getElementById('nombre').value;
+        var nie = document.getElementById('nie').value;
+
+        if (nombre === "" || nie === "") {
+            alert("Por favor, complete todos los campos.");
+        } else {
+            document.getElementById('popup').style.display = 'none';
         }
+    }
 
-        function calculateScore() {
-            let score = 0;
-            quizData.forEach((questionData, index) => {
-                const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
-                if (selectedAnswer) {
-                    const answerIndex = selectedAnswer.value;
-                    if (questionData.answers[answerIndex].correct) {
-                        score++;
-                    }
-                }
-            });
-            return score;
-        }
+    function calculateGrade() {
+        var totalQuestions = document.querySelectorAll('.question').length;
+        var correctAnswers = document.querySelectorAll('input[type="radio"]:checked[value="correcto"]').length;
+        var maxPoints = 10;
+        var grade = (correctAnswers / totalQuestions) * maxPoints;
 
-        function showResult() {
-            const score = calculateScore();
-            const percentage = (score / quizData.length) * 10;
-            const name = prompt('Por favor, ingrese su nombre:');
-            const NIE = prompt('Por favor, ingrese su NIE:');
-            modalName.textContent = `Nombre: ${name}`;
-            modalNIE.textContent = `NIE: ${NIE}`;
-            modalScore.textContent = `Calificación obtenida: ${score} de ${quizData.length}`;
-            modalAnswers.innerHTML = `<h3>Respuestas correctas:</h3><ul>${quizData.map((questionData, index) => `
-                <li>Pregunta ${index + 1}: ${questionData.answers.find(answer => answer.correct).text}</li>
-            `).join('')}</ul>`;
-            resultModal.style.display = 'block';
-        }
+        alert("Su nota es: " + grade.toFixed(2) + " de " + maxPoints);
+    }
+</script>
 
-        submitButton.addEventListener('click', showResult);
-
-        closeModal.addEventListener('click', () => {
-            resultModal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (event) => {
-            if (event.target === resultModal) {
-                resultModal.style.display = 'none';
-            }
-        });
-
-        generateQuiz();
-    </script>
 </body>
 </html>
